@@ -3,7 +3,12 @@
   "tags": [
     {
       "name": "sprite-editor-grid",
-      "description": "Grid editor for a single sprite, defined in src/components/SpriteEditorGrid.js.",
+      "description": "Grid editor for a single sprite, defined in src/components/SpriteEditorGrid/SpriteEditorGrid.js.",
+      "attributes": []
+    },
+    {
+      "name": "sprite-editor-grid-cell",
+      "description": "Single cell within the sprite editor grid, defined in src/components/SpriteEditorGridCell/SpriteEditorGridCell.js.",
       "attributes": []
     }
   ]

@@ -1,0 +1,7 @@
+:root {
+  --gbs-color-default-300: #b7b7b7;
+
+  --grid-border-color: var(--gbs-color-default-300);
+  --grid-border-width: 1px;
+  --grid-cell-size: 24px;
+}

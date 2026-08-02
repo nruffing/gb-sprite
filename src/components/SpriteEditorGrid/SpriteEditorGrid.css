@@ -1,0 +1,7 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, var(--grid-cell-size));
+  width: fit-content;
+  border-left: var(--grid-border-width) solid var(--grid-border-color);
+  border-top: var(--grid-border-width) solid var(--grid-border-color);
+}

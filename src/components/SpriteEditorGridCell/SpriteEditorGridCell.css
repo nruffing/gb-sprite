@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  width: var(--grid-cell-size);
+  height: var(--grid-cell-size);
+}
+
+div {
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border-right: var(--grid-border-width) solid var(--grid-border-color);
+  border-bottom: var(--grid-border-width) solid var(--grid-border-color);
+}
