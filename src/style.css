@@ -13,6 +13,11 @@
 
   --gbs-color-highlight: #ffa334;
 
+  --gbs-color-code-token-default: var(--gbs-color-default-0);
+  --gbs-color-code-token-keyword: #ff8fb3;
+  --gbs-color-code-token-number: #7fd9ff;
+  --gbs-color-code-token-punctuation: var(--gbs-color-default-400);
+
   /* Game Boy grayscale palette, lightest to darkest */
   --gbs-palette-0: #ffffff; /* GBDK: WHITE */
   --gbs-palette-1: #aaaaaa; /* GBDK: LTGREY */

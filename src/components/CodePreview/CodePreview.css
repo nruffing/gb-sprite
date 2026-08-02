@@ -26,7 +26,19 @@ pre {
   margin: 0;
   padding: var(--gbs-spacer-200);
   background-color: var(--gbs-color-default-800);
-  color: var(--gbs-color-default-0);
+  color: var(--gbs-color-code-token-default);
   font-size: var(--gbs-font-size-100);
   overflow-x: auto;
+}
+
+.token-keyword {
+  color: var(--gbs-color-code-token-keyword);
+}
+
+.token-number {
+  color: var(--gbs-color-code-token-number);
+}
+
+.token-punctuation {
+  color: var(--gbs-color-code-token-punctuation);
 }

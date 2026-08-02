@@ -1,6 +1,7 @@
 import styles from "./CodePreview.css?inline";
 import { spriteStore } from "../../state/spriteStore.js";
 import { generateTilesCode } from "./generateTilesCode.js";
+import { highlightCCode } from "./highlightCCode.js";
 
 class CodePreview extends HTMLElement {
   constructor() {
@@ -19,13 +20,16 @@ class CodePreview extends HTMLElement {
     const copyButton = shadow.querySelector("button");
     const codeElement = shadow.querySelector("code");
 
+    let currentCode = "";
+
     const render = () => {
-      codeElement.textContent = generateTilesCode(nameInput.value || "Tileset", spriteStore.pixels);
+      currentCode = generateTilesCode(nameInput.value || "Tileset", spriteStore.pixels);
+      codeElement.replaceChildren(highlightCCode(currentCode));
     };
 
     nameInput.addEventListener("input", render);
     copyButton.addEventListener("click", () => {
-      navigator.clipboard.writeText(codeElement.textContent);
+      navigator.clipboard.writeText(currentCode);
     });
     spriteStore.addEventListener("change", render);
 
