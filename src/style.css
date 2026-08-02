@@ -51,6 +51,9 @@
   --grid-border-color: var(--gbs-color-default-600);
   --grid-border-width: 1px;
   --grid-cell-size: 24px;
+
+  --divider-border: 2px solid var(--gbs-color-default-700);
+  --divider-padding: var(--gbs-spacer-300);
 }
 
 body {
@@ -85,4 +88,9 @@ body {
 
 #app > .bottom {
   grid-area: bottom;
+}
+
+.divider-top {
+  padding-top: var(--divider-padding);
+  border-top: var(--divider-border);
 }
