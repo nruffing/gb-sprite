@@ -4,4 +4,5 @@
   width: fit-content;
   border-left: var(--grid-border-width) solid var(--grid-border-color);
   border-top: var(--grid-border-width) solid var(--grid-border-color);
+  user-select: none;
 }
