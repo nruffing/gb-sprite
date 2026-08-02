@@ -3,6 +3,7 @@ import { paletteStore, PALETTE_SIZE } from "./state/paletteStore.js";
 
 import "./components/SpriteEditorGrid/SpriteEditorGrid.js";
 import "./components/PaletteLegend/PaletteLegend.js";
+import "./components/CodePreview/CodePreview.js";
 
 const isTextInput = (target) =>
   target instanceof HTMLElement &&

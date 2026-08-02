@@ -1,19 +1,19 @@
 import "../SpriteEditorGridCell/SpriteEditorGridCell.js";
 import styles from "./SpriteEditorGrid.css?inline";
+import { PIXEL_COUNT } from "../../state/spriteStore.js";
 
 class SpriteEditorGrid extends HTMLElement {
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
 
-    const cellCount = 64; // 8x8 sprite tile
     shadow.innerHTML = /* html */ `
       <style>${styles}</style>
       <div class="grid">
-        ${Array.from({ length: cellCount })
+        ${Array.from({ length: PIXEL_COUNT })
           .map(
-            () => /* html */ `
-          <sprite-editor-grid-cell></sprite-editor-grid-cell>
+            (_, index) => /* html */ `
+          <sprite-editor-grid-cell index="${index}"></sprite-editor-grid-cell>
         `,
           )
           .join("")}

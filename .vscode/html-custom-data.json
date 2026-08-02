@@ -9,11 +9,21 @@
     {
       "name": "sprite-editor-grid-cell",
       "description": "Single cell within the sprite editor grid, defined in src/components/SpriteEditorGridCell/SpriteEditorGridCell.js.",
-      "attributes": []
+      "attributes": [
+        {
+          "name": "index",
+          "description": "Zero-based position of this cell within the 64-pixel sprite grid."
+        }
+      ]
     },
     {
       "name": "palette-legend",
       "description": "Displays the 4-color Game Boy grayscale palette with GBDK constant labels, defined in src/components/PaletteLegend/PaletteLegend.js.",
+      "attributes": []
+    },
+    {
+      "name": "code-preview",
+      "description": "Shows GBDK-2020 C source for the current sprite, with a copy-to-clipboard button, defined in src/components/CodePreview/CodePreview.js.",
       "attributes": []
     }
   ]

@@ -55,8 +55,12 @@ body {
 }
 
 #app {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "left right"
+    "bottom bottom";
+  gap: var(--gbs-spacer-600);
   padding: var(--gbs-spacer-200);
   font-family: var(--font-family);
   font-size: var(--gbs-font-size-200);
@@ -64,7 +68,16 @@ body {
 }
 
 #app > .left {
+  grid-area: left;
   display: flex;
   flex-direction: column;
   gap: var(--gbs-spacer-300);
+}
+
+#app > .right {
+  grid-area: right;
+}
+
+#app > .bottom {
+  grid-area: bottom;
 }

@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--gbs-spacer-100);
+  margin-bottom: var(--gbs-spacer-100);
+}
+
+input {
+  font: inherit;
+  padding: var(--gbs-spacer-100);
+  border: var(--grid-border-width) solid var(--grid-border-color);
+  background-color: var(--gbs-color-default-0);
+}
+
+button {
+  font: inherit;
+  padding: var(--gbs-spacer-100) var(--gbs-spacer-200);
+  cursor: pointer;
+}
+
+pre {
+  margin: 0;
+  padding: var(--gbs-spacer-200);
+  background-color: var(--gbs-color-default-800);
+  color: var(--gbs-color-default-0);
+  font-size: var(--gbs-font-size-100);
+  overflow-x: auto;
+}
