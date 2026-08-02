@@ -2,6 +2,10 @@
 
 A Game Boy sprite editor web app, built with Vite and vanilla JavaScript (no framework), using native Web Components.
 
+Inspired-by [Game Boy Tile Tool](https://nathanheffley.itch.io/game-boy-tile-tool).
+
+This is an attempt to provide some improved ergonomics and additional tooling to support a wholistic workflow.
+
 ## Dev setup
 
 Requires Node `^20.19.0 || >=22.12.0` (see `.nvmrc` / `engines` in `package.json`). If you use `nvm`:
