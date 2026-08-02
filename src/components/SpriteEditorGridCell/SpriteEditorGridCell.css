@@ -11,6 +11,7 @@ div {
   height: 100%;
   border-right: var(--grid-border-width) solid var(--grid-border-color);
   border-bottom: var(--grid-border-width) solid var(--grid-border-color);
+  background-color: var(--gbs-palette-0);
 }
 
 div.filled-3 {

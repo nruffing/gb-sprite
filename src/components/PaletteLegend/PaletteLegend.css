@@ -1,0 +1,22 @@
+:host {
+  display: block;
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gbs-spacer-200);
+  text-transform: uppercase;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: var(--gbs-spacer-100);
+}
+
+.swatch-color {
+  box-sizing: border-box;
+  width: var(--grid-cell-size);
+  height: var(--grid-cell-size);
+}

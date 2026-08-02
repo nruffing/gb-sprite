@@ -10,6 +10,11 @@
       "name": "sprite-editor-grid-cell",
       "description": "Single cell within the sprite editor grid, defined in src/components/SpriteEditorGridCell/SpriteEditorGridCell.js.",
       "attributes": []
+    },
+    {
+      "name": "palette-legend",
+      "description": "Displays the 4-color Game Boy grayscale palette with GBDK constant labels, defined in src/components/PaletteLegend/PaletteLegend.js.",
+      "attributes": []
     }
   ]
 }
