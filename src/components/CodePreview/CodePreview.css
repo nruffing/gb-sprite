@@ -16,13 +16,27 @@ input {
   background-color: var(--gbs-color-default-0);
 }
 
-button {
-  font: inherit;
+.code-wrapper {
+  position: relative;
+}
+
+.code-wrapper button {
+  position: absolute;
+  top: var(--gbs-spacer-100);
+  right: var(--gbs-spacer-100);
   display: inline-flex;
   align-items: center;
-  gap: var(--gbs-spacer-100);
-  padding: var(--gbs-spacer-100) var(--gbs-spacer-200);
+  font: inherit;
+  padding: var(--gbs-spacer-100);
+  color: var(--gbs-color-code-token-default);
+  background-color: var(--gbs-color-default-700);
+  border: none;
+  border-radius: var(--gbs-spacer-100);
   cursor: pointer;
+}
+
+.code-wrapper button:hover {
+  background-color: var(--gbs-color-default-600);
 }
 
 pre {

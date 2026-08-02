@@ -12,12 +12,13 @@ class CodePreview extends HTMLElement {
       <style>${styles}</style>
       <div class="header">
         <input type="text" value="Tileset" placeholder="Tileset Name" />
-        <button type="button">
-          <svg-icon name="copy"></svg-icon>
-          Copy to clipboard
-        </button>
       </div>
-      <pre><code></code></pre>
+      <div class="code-wrapper">
+        <button type="button" aria-label="Copy to clipboard" title="Copy to clipboard">
+          <svg-icon name="copy"></svg-icon>
+        </button>
+        <pre><code></code></pre>
+      </div>
     `;
 
     const nameInput = shadow.querySelector("input");
