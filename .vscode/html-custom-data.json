@@ -25,6 +25,16 @@
       "name": "code-preview",
       "description": "Shows GBDK-2020 C source for the current sprite, with a copy-to-clipboard button, defined in src/components/CodePreview/CodePreview.js.",
       "attributes": []
+    },
+    {
+      "name": "svg-icon",
+      "description": "Renders a named icon from the registry in src/components/SvgIcon/icons.js, defined in src/components/SvgIcon/SvgIcon.js.",
+      "attributes": [
+        {
+          "name": "name",
+          "description": "Key into the ICONS registry (src/components/SvgIcon/icons.js), e.g. \"copy\"."
+        }
+      ]
     }
   ]
 }

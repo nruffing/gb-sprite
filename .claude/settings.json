@@ -1,0 +1,5 @@
+{
+  "permissions": {
+    "allow": ["Edit(.vscode/html-custom-data.json)", "Edit(CLAUDE.md)"]
+  }
+}

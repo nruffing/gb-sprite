@@ -9,7 +9,9 @@ class SpriteStore extends EventTarget {
 
   setPixel(index, colorIndex) {
     this.#pixels[index] = colorIndex;
-    this.dispatchEvent(new CustomEvent("change", { detail: { pixels: this.#pixels } }));
+    this.dispatchEvent(
+      new CustomEvent("change", { detail: { pixels: this.#pixels } }),
+    );
   }
 }
 

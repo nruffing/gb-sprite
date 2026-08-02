@@ -1,4 +1,5 @@
-const TOKEN_PATTERN = /(?<keyword>\bunsigned\b|\bchar\b)|(?<number>0x[0-9A-Fa-f]+)|(?<punctuation>[{}[\];,=])/g;
+const TOKEN_PATTERN =
+  /(?<keyword>\bunsigned\b|\bchar\b)|(?<number>0x[0-9A-Fa-f]+)|(?<punctuation>[{}[\];,=])/g;
 
 // Tokenizes the narrow C subset generateTilesCode produces and returns a
 // DocumentFragment of <span>/text nodes rather than an HTML string, so
@@ -9,10 +10,14 @@ export function highlightCCode(code) {
 
   for (const match of code.matchAll(TOKEN_PATTERN)) {
     if (match.index > lastIndex) {
-      fragment.appendChild(document.createTextNode(code.slice(lastIndex, match.index)));
+      fragment.appendChild(
+        document.createTextNode(code.slice(lastIndex, match.index)),
+      );
     }
 
-    const [tokenType] = Object.entries(match.groups).find(([, value]) => value !== undefined);
+    const [tokenType] = Object.entries(match.groups).find(
+      ([, value]) => value !== undefined,
+    );
     const span = document.createElement("span");
     span.className = `token-${tokenType}`;
     span.textContent = match[0];

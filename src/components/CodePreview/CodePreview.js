@@ -2,6 +2,7 @@ import styles from "./CodePreview.css?inline";
 import { spriteStore } from "../../state/spriteStore.js";
 import { generateTilesCode } from "./generateTilesCode.js";
 import { highlightCCode } from "./highlightCCode.js";
+import "../SvgIcon/SvgIcon.js";
 
 class CodePreview extends HTMLElement {
   constructor() {
@@ -11,7 +12,10 @@ class CodePreview extends HTMLElement {
       <style>${styles}</style>
       <div class="header">
         <input type="text" value="Tileset" placeholder="Tileset Name" />
-        <button type="button">Copy to clipboard</button>
+        <button type="button">
+          <svg-icon name="copy"></svg-icon>
+          Copy to clipboard
+        </button>
       </div>
       <pre><code></code></pre>
     `;
@@ -23,7 +27,10 @@ class CodePreview extends HTMLElement {
     let currentCode = "";
 
     const render = () => {
-      currentCode = generateTilesCode(nameInput.value || "Tileset", spriteStore.pixels);
+      currentCode = generateTilesCode(
+        nameInput.value || "Tileset",
+        spriteStore.pixels,
+      );
       codeElement.replaceChildren(highlightCCode(currentCode));
     };
 

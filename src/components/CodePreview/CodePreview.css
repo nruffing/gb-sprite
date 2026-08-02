@@ -18,6 +18,9 @@ input {
 
 button {
   font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gbs-spacer-100);
   padding: var(--gbs-spacer-100) var(--gbs-spacer-200);
   cursor: pointer;
 }

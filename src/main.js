@@ -7,9 +7,13 @@ import "./components/CodePreview/CodePreview.js";
 
 const isTextInput = (target) =>
   target instanceof HTMLElement &&
-  (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable);
+  (target.tagName === "INPUT" ||
+    target.tagName === "TEXTAREA" ||
+    target.isContentEditable);
 
-const colorIndexKeyPattern = new RegExp(`^[0-${Math.min(PALETTE_SIZE - 1, 9)}]$`);
+const colorIndexKeyPattern = new RegExp(
+  `^[0-${Math.min(PALETTE_SIZE - 1, 9)}]$`,
+);
 
 window.addEventListener("keydown", (event) => {
   if (isTextInput(event.target)) return;

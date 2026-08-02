@@ -52,6 +52,8 @@
   --grid-border-width: 1px;
   --grid-cell-size: 24px;
 
+  --gbs-icon-size: var(--gbs-font-size-300);
+
   --divider-border: 2px solid var(--gbs-color-default-700);
   --divider-padding: var(--gbs-spacer-300);
 }

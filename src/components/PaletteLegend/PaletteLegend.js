@@ -29,7 +29,10 @@ class PaletteLegend extends HTMLElement {
     const swatches = shadow.querySelectorAll(".swatch");
     const updateSelected = () => {
       swatches.forEach((swatch) => {
-        swatch.classList.toggle("selected", Number(swatch.dataset.index) === paletteStore.selectedColorIndex);
+        swatch.classList.toggle(
+          "selected",
+          Number(swatch.dataset.index) === paletteStore.selectedColorIndex,
+        );
       });
     };
 
