@@ -12,3 +12,7 @@ div {
   border-right: var(--grid-border-width) solid var(--grid-border-color);
   border-bottom: var(--grid-border-width) solid var(--grid-border-color);
 }
+
+div.filled-3 {
+  background-color: var(--gbs-palette-3);
+}

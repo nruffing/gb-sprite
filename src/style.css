@@ -1,6 +1,12 @@
 :root {
   --gbs-color-default-300: #b7b7b7;
 
+  /* Game Boy grayscale palette, lightest to darkest */
+  --gbs-palette-0: #ffffff; /* GBDK: WHITE */
+  --gbs-palette-1: #aaaaaa; /* GBDK: LTGREY */
+  --gbs-palette-2: #555555; /* GBDK: DKGREY */
+  --gbs-palette-3: #000000; /* GBDK: BLACK */
+
   --grid-border-color: var(--gbs-color-default-300);
   --grid-border-width: 1px;
   --grid-cell-size: 24px;
