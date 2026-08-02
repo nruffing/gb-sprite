@@ -11,6 +11,8 @@
   --gbs-color-default-900: #0d0d0d;
   --gbs-color-default-1000: #000000;
 
+  --gbs-color-highlight: #ffa334;
+
   /* Game Boy grayscale palette, lightest to darkest */
   --gbs-palette-0: #ffffff; /* GBDK: WHITE */
   --gbs-palette-1: #aaaaaa; /* GBDK: LTGREY */

@@ -1,4 +1,5 @@
 import styles from "./SpriteEditorGridCell.css?inline";
+import { paletteStore } from "../../state/paletteStore.js";
 
 class SpriteEditorGridCell extends HTMLElement {
   constructor() {
@@ -11,7 +12,7 @@ class SpriteEditorGridCell extends HTMLElement {
 
     const cell = shadow.querySelector("div");
     cell.addEventListener("click", () => {
-      cell.classList.toggle("filled-3");
+      cell.className = `filled-${paletteStore.selectedColorIndex}`;
     });
   }
 }

@@ -1,4 +1,5 @@
 import styles from "./PaletteLegend.css?inline";
+import { paletteStore } from "../../state/paletteStore.js";
 
 const PALETTE = [
   { index: 0, label: "WHITE" },
@@ -16,7 +17,7 @@ class PaletteLegend extends HTMLElement {
       <div class="legend">
         ${PALETTE.map(
           ({ index, label }) => /* html */ `
-          <div class="swatch">
+          <div class="swatch" data-index="${index}">
             <div class="swatch-color" style="background-color: var(--gbs-palette-${index})"></div>
             <span>${label} [${index}]</span>
           </div>
@@ -24,6 +25,21 @@ class PaletteLegend extends HTMLElement {
         ).join("")}
       </div>
     `;
+
+    const swatches = shadow.querySelectorAll(".swatch");
+    const updateSelected = () => {
+      swatches.forEach((swatch) => {
+        swatch.classList.toggle("selected", Number(swatch.dataset.index) === paletteStore.selectedColorIndex);
+      });
+    };
+
+    swatches.forEach((swatch) => {
+      swatch.addEventListener("click", () => {
+        paletteStore.setSelectedColorIndex(Number(swatch.dataset.index));
+      });
+    });
+    paletteStore.addEventListener("change", updateSelected);
+    updateSelected();
   }
 }
 customElements.define("palette-legend", PaletteLegend);

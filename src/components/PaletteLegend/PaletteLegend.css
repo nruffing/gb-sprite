@@ -13,10 +13,20 @@
   display: flex;
   align-items: center;
   gap: var(--gbs-spacer-100);
+  cursor: pointer;
+}
+
+.swatch.selected {
+  color: var(--gbs-color-highlight);
 }
 
 .swatch-color {
   box-sizing: border-box;
   width: var(--grid-cell-size);
   height: var(--grid-cell-size);
+  border: transparent solid var(--grid-border-width);
+}
+
+.swatch.selected .swatch-color {
+  border-color: var(--gbs-color-highlight);
 }

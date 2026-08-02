@@ -14,6 +14,18 @@ div {
   background-color: var(--gbs-palette-0);
 }
 
+div.filled-0 {
+  background-color: var(--gbs-palette-0);
+}
+
+div.filled-1 {
+  background-color: var(--gbs-palette-1);
+}
+
+div.filled-2 {
+  background-color: var(--gbs-palette-2);
+}
+
 div.filled-3 {
   background-color: var(--gbs-palette-3);
 }
