@@ -1,5 +1,11 @@
 {
   "version": 1.1,
+  "globalAttributes": [
+    {
+      "name": "tab-label",
+      "description": "Used on a direct child of <tab-panel> to set that tab's button label. See src/components/TabPanel/TabPanel.js."
+    }
+  ],
   "tags": [
     {
       "name": "sprite-editor-grid",
@@ -35,6 +41,16 @@
           "description": "Key into the ICONS registry (src/components/SvgIcon/icons.js), e.g. \"copy\"."
         }
       ]
+    },
+    {
+      "name": "tab-panel",
+      "description": "Tabbed container; each direct child is one tab, labeled via its tab-label attribute, defined in src/components/TabPanel/TabPanel.js.",
+      "attributes": []
+    },
+    {
+      "name": "tile-gallery",
+      "description": "Placeholder component (currently empty), defined in src/components/TileGallery/TileGallery.js.",
+      "attributes": []
     }
   ]
 }

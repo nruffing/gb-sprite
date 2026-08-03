@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+.tabs {
+  display: flex;
+  gap: var(--gbs-spacer-100);
+  border-bottom: var(--tabs-border);
+  margin-bottom: var(--gbs-spacer-300);
+}
+
+.tabs button {
+  font: inherit;
+  padding: var(--gbs-spacer-100) var(--gbs-spacer-300);
+  margin-bottom: calc(var(--tab-underline-width) * -1);
+  background: none;
+  border: none;
+  border-bottom: var(--tab-underline-width) solid var(--tab-border-color);
+  border-radius: 0;
+  color: var(--tab-color);
+}
+
+.tabs button:hover:not(.selected) {
+  background: var(--tab-color-hover);
+  border-radius: var(--gbs-border-radius);
+  cursor: pointer;
+}
+
+.tabs button.selected {
+  color: var(--tab-color-selected);
+  border-bottom-color: var(--tab-color-selected);
+}
+
+/* Slotted children set their own `:host { display: ... }`, which as an author
+   style beats the UA `[hidden] { display: none }` rule — force it here. */
+::slotted([hidden]) {
+  display: none !important;
+}

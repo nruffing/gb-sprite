@@ -12,7 +12,9 @@
   --gbs-color-default-1000: #000000;
 
   --gbs-color-highlight: #ffa334;
+  --gbs-color-hover: var(--gbs-color-default-600);
 
+  --gbs-color-code-background: var(--gbs-color-default-700);
   --gbs-color-code-token-default: var(--gbs-color-default-0);
   --gbs-color-code-token-keyword: #ff8fb3;
   --gbs-color-code-token-number: #7fd9ff;
@@ -34,6 +36,9 @@
   --gbs-font-size-800: 24px;
   --gbs-font-size-900: 26px;
 
+  --gbs-font-weight-default: 400;
+  --gbs-font-weight-bold: 700;
+
   --gbs-spacer-100: 5px;
   --gbs-spacer-200: 10px;
   --gbs-spacer-300: 15px;
@@ -44,9 +49,11 @@
   --gbs-spacer-800: 40px;
   --gbs-spacer-900: 45px;
 
-  --background-color: var(--gbs-color-default-600);
+  --gbs-border-radius: 5px;
+
+  --background-color: var(--gbs-color-default-800);
   --font-family: sans-serif;
-  --font-color: var(--gbs-color-default-1000);
+  --font-color: var(--gbs-color-default-300);
 
   --grid-border-color: var(--gbs-color-default-600);
   --grid-border-width: 1px;
@@ -54,7 +61,14 @@
 
   --gbs-icon-size: var(--gbs-font-size-300);
 
-  --divider-border: 2px solid var(--gbs-color-default-700);
+  --tab-underline-width: 2px;
+  --tab-color: var(--font-color);
+  --tab-color-selected: var(--gbs-color-highlight);
+  --tab-color-hover: var(--gbs-color-hover);
+  --tab-border-color: var(--gbs-color-default-300);
+  --tabs-border: var(--tab-underline-width) solid var(--tab-border-color);
+
+  --divider-border: 1px solid var(--gbs-color-default-500);
   --divider-padding: var(--gbs-spacer-300);
 }
 
@@ -74,6 +88,7 @@ body {
   padding: var(--gbs-spacer-200);
   font-family: var(--font-family);
   font-size: var(--gbs-font-size-200);
+  font-weight: var(--gbs-font-weight-default);
   color: var(--font-color);
 }
 
