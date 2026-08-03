@@ -1,6 +1,6 @@
 import "../SpriteEditorGridCell/SpriteEditorGridCell.js";
 import styles from "./SpriteEditorGrid.css?inline";
-import { PIXEL_COUNT } from "../../state/spriteStore.js";
+import { PIXEL_COUNT } from "../../state/tileStore.js";
 
 class SpriteEditorGrid extends HTMLElement {
   constructor() {

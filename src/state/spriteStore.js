@@ -1,16 +1,16 @@
-export const PIXEL_COUNT = 64; // 8x8 sprite tile
+import { Tile } from "./tileStore";
 
 class SpriteStore extends EventTarget {
-  #pixels = new Array(PIXEL_COUNT).fill(0);
+  #tile = new Tile();
 
   get pixels() {
-    return this.#pixels;
+    return this.#tile.pixels;
   }
 
   setPixel(index, colorIndex) {
-    this.#pixels[index] = colorIndex;
+    this.#tile.setPixel(index, colorIndex);
     this.dispatchEvent(
-      new CustomEvent("change", { detail: { pixels: this.#pixels } }),
+      new CustomEvent("change", { detail: { pixels: this.pixels } }),
     );
   }
 }
