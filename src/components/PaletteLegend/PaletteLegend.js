@@ -19,7 +19,7 @@ class PaletteLegend extends HTMLElement {
           ({ index, label }) => /* html */ `
           <div class="swatch" data-index="${index}">
             <div class="swatch-color" style="background-color: var(--gbs-palette-${index})"></div>
-            <span>${label} [${index}]</span>
+            <span>[${index}] ${label}</span>
           </div>
         `,
         ).join("")}

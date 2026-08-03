@@ -11,8 +11,22 @@
   --gbs-color-default-900: #0d0d0d;
   --gbs-color-default-1000: #000000;
 
-  --gbs-color-highlight: #ffa334;
-  --gbs-color-hover: var(--gbs-color-default-600);
+  /* Linear scale anchored at -400 (hue/saturation fixed, lightness ramps 100% white -> 0% black) */
+  --gbs-color-primary-0: hsl(33 100% 100%);
+  --gbs-color-primary-100: hsl(33 100% 90%);
+  --gbs-color-primary-200: hsl(33 100% 80%);
+  --gbs-color-primary-300: hsl(33 100% 70%);
+  --gbs-color-primary-400: hsl(33 100% 60%);
+  --gbs-color-primary-500: hsl(33 100% 50%);
+  --gbs-color-primary-600: hsl(33 100% 40%);
+  --gbs-color-primary-700: hsl(33 100% 30%);
+  --gbs-color-primary-800: hsl(33 100% 20%);
+  --gbs-color-primary-900: hsl(33 100% 10%);
+  --gbs-color-primary-1000: hsl(33 100% 0%);
+
+  --gbs-color-highlight: var(--gbs-color-primary-500);
+  --gbs-color-hover: var(--gbs-color-primary-700);
+  --gbs-color-hover-secondary: var(--gbs-color-default-0);
 
   --gbs-color-code-background: var(--gbs-color-default-700);
   --gbs-color-code-token-default: var(--gbs-color-default-0);
@@ -39,6 +53,7 @@
   --gbs-font-weight-default: 400;
   --gbs-font-weight-bold: 700;
 
+  --gbs-spacer-50: 3px;
   --gbs-spacer-100: 5px;
   --gbs-spacer-200: 10px;
   --gbs-spacer-300: 15px;
@@ -49,7 +64,7 @@
   --gbs-spacer-800: 40px;
   --gbs-spacer-900: 45px;
 
-  --gbs-border-radius: 5px;
+  --gbs-border-radius: 4px;
 
   --background-color: var(--gbs-color-default-800);
   --font-family: sans-serif;

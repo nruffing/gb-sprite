@@ -45,7 +45,12 @@
     {
       "name": "tab-panel",
       "description": "Tabbed container; each direct child is one tab, labeled via its tab-label attribute, defined in src/components/TabPanel/TabPanel.js.",
-      "attributes": []
+      "attributes": [
+        {
+          "name": "data-default-tab",
+          "description": "tab-label of the child tab to select on load; falls back to the first tab if unset or unmatched."
+        }
+      ]
     },
     {
       "name": "tile-gallery",

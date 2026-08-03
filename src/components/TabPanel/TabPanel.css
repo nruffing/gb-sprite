@@ -4,7 +4,7 @@
 
 .tabs {
   display: flex;
-  gap: var(--gbs-spacer-100);
+  gap: 0;
   border-bottom: var(--tabs-border);
   margin-bottom: var(--gbs-spacer-300);
 }
@@ -22,6 +22,7 @@
 
 .tabs button:hover:not(.selected) {
   background: var(--tab-color-hover);
+  color: var(--gbs-color-hover-secondary);
   border-radius: var(--gbs-border-radius);
   cursor: pointer;
 }

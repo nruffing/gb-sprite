@@ -2,20 +2,6 @@
   display: block;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  gap: var(--gbs-spacer-100);
-  margin-bottom: var(--gbs-spacer-100);
-}
-
-input {
-  font: inherit;
-  padding: var(--gbs-spacer-100);
-  border: var(--grid-border-width) solid var(--grid-border-color);
-  background-color: var(--gbs-color-default-0);
-}
-
 .code-wrapper {
   position: relative;
 }
@@ -31,12 +17,13 @@ input {
   color: var(--gbs-color-code-token-default);
   background-color: var(--gbs-color-default-700);
   border: none;
-  border-radius: var(--gbs-spacer-100);
+  border-radius: var(--gbs-border-radius);
   cursor: pointer;
 }
 
 .code-wrapper button:hover {
   background-color: var(--gbs-color-hover);
+  color: var(--gbs-color-hover-secondary);
 }
 
 pre {
@@ -58,4 +45,24 @@ pre {
 
 .token-punctuation {
   color: var(--gbs-color-code-token-punctuation);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: var(--gbs-spacer-100);
+  margin-top: var(--gbs-spacer-200);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gbs-spacer-60);
+}
+
+input {
+  font: inherit;
+  padding: var(--gbs-spacer-100);
+  border: var(--grid-border-width) solid var(--grid-border-color);
+  background-color: var(--gbs-color-default-0);
 }

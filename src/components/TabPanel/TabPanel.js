@@ -3,6 +3,8 @@ import styles from "./TabPanel.css?inline";
 // Tabs are driven by light-DOM children: each direct child is one tab, labeled
 // via its `tab-label` attribute. Visibility is toggled with `hidden` on the
 // child itself rather than named <slot>s, since the set of children is dynamic.
+// The `data-default-tab` attribute (matched against a child's `tab-label`)
+// selects which tab is shown on load; it falls back to the first tab.
 class TabPanel extends HTMLElement {
   constructor() {
     super();
@@ -29,7 +31,12 @@ class TabPanel extends HTMLElement {
     });
 
     this.panels = panels;
-    this.selectIndex(0);
+
+    const defaultTab = this.dataset.defaultTab;
+    const defaultIndex = panels.findIndex(
+      (panel) => panel.getAttribute("tab-label") === defaultTab,
+    );
+    this.selectIndex(defaultIndex === -1 ? 0 : defaultIndex);
   }
 
   selectIndex(index) {

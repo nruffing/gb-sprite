@@ -4,20 +4,25 @@ import { generateTilesCode } from "./generateTilesCode.js";
 import { highlightCCode } from "./highlightCCode.js";
 import "../SvgIcon/SvgIcon.js";
 
+const DEFAULT_TILESET_NAME = "Tileset";
+
 class CodePreview extends HTMLElement {
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
     shadow.innerHTML = /* html */ `
       <style>${styles}</style>
-      <div class="header">
-        <input type="text" value="Tileset" placeholder="Tileset Name" />
-      </div>
       <div class="code-wrapper">
         <button type="button" aria-label="Copy to clipboard" title="Copy to clipboard">
           <svg-icon name="copy"></svg-icon>
         </button>
         <pre><code></code></pre>
+      </div>
+      <div class="footer">
+        <label>
+          <span>Tileset Name</span>
+          <input type="text" name="tilesetName" value="${DEFAULT_TILESET_NAME}" />
+        </label>
       </div>
     `;
 
