@@ -51,6 +51,16 @@
       "name": "tile-gallery",
       "description": "Placeholder component (currently empty), defined in src/components/TileGallery/TileGallery.js.",
       "attributes": []
+    },
+    {
+      "name": "tile-preview",
+      "description": "Renders an 8x8 tile to a canvas at a given pixel scale with no seams between pixels, defined in src/components/TilePreview/TilePreview.js. Mirrors the sprite being edited by default; set the `pixels` JS property to show a different tile instead.",
+      "attributes": [
+        {
+          "name": "scale",
+          "description": "CSS pixels per tile pixel (default 4)."
+        }
+      ]
     }
   ]
 }
