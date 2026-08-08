@@ -1,4 +1,5 @@
 export const PIXEL_COUNT = 64; // 8x8 sprite tile
+const INITIAL_TILE_COUNT = 4;
 
 export class Tile {
   #pixels = new Array(PIXEL_COUNT).fill(0);
@@ -13,7 +14,7 @@ export class Tile {
 }
 
 class TileStore extends EventTarget {
-  #tiles = [new Tile()];
+  #tiles = Array.from({ length: INITIAL_TILE_COUNT }, () => new Tile());
 
   get tiles() {
     return this.#tiles;

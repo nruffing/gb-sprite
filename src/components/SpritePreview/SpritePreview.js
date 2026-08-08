@@ -1,24 +1,24 @@
-import styles from "./TileGallery.css?inline";
+import styles from "./SpritePreview.css?inline";
 import { tileStore } from "../../state/tileStore";
 
-class TileGallery extends HTMLElement {
+class SpritePreview extends HTMLElement {
   #tiles = tileStore.tiles;
 
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
     shadow.innerHTML = /* html */ `
-      <style>${styles}</style>
-      <div class="gallery">
+        <style>${styles}</style>
+        <div class="preview">
         ${this.#tiles
           .map(
             () => /* html */ `
-          <tile-preview scale="10"></tile-preview>
+          <tile-preview scale="12"></tile-preview>
           `,
           )
           .join("")}
-      </div>
-    `;
+        </div>
+      `;
   }
 }
-customElements.define("tile-gallery", TileGallery);
+customElements.define("sprite-preview", SpritePreview);

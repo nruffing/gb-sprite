@@ -1,3 +1,9 @@
 :host {
   display: block;
 }
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: var(--gbs-spacer-200);
+}

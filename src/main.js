@@ -7,6 +7,7 @@ import "./components/CodePreview/CodePreview.js";
 import "./components/TabPanel/TabPanel.js";
 import "./components/TileGallery/TileGallery.js";
 import "./components/TilePreview/TilePreview.js";
+import "./components/SpritePreview/SpritePreview.js";
 
 const isTextInput = (target) =>
   target instanceof HTMLElement &&

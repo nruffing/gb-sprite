@@ -5,7 +5,7 @@ const TILE_SIDE = 8;
 const DEFAULT_SCALE = 4;
 
 // Renders a tile to a <canvas> (rather than a grid of elements) so pixels
-// abut with zero seams at any scale factor, including non-integer ones.
+// sit adjacent with zero seams at any scale factor, including non-integer ones.
 //
 // Defaults to mirroring the sprite currently being edited. Setting `.pixels`
 // explicitly (e.g. to preview a gallery tile) detaches it from spriteStore.
