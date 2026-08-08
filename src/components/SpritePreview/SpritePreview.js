@@ -1,8 +1,15 @@
 import styles from "./SpritePreview.css?inline";
 import { tileStore, MAP_WIDTH } from "../../state/tileStore";
 
+// Flipping the whole assembled sprite (not just each tile's own pixels) needs
+// to also swap tiles across the grid — columns for flip-X, rows for flip-Y —
+// so the frame's silhouette mirrors correctly, not just each tile in place.
+// Each <tile-preview>'s grid slot (`data-position`) stays fixed; #render()
+// remaps which source tile-index renders there and mirrors its own pixels.
 class SpritePreview extends HTMLElement {
   #tiles = tileStore.tiles;
+  #flipX = false;
+  #flipY = false;
 
   constructor() {
     super();
@@ -13,18 +20,48 @@ class SpritePreview extends HTMLElement {
         <div class="preview" style="--map-width: ${MAP_WIDTH}">
         ${this.#tiles
           .map(
-            (_tile, index) => /* html */ `
-          <tile-preview scale="12" tile-index="${index}"></tile-preview>
+            (_tile, position) => /* html */ `
+          <tile-preview scale="12" data-position="${position}"></tile-preview>
           `,
           )
           .join("")}
         </div>
         <div class="switches">
-          <toggle-switch label="Flip-X"></toggle-switch>
-          <toggle-switch label="Flip-Y"></toggle-switch>
+          <toggle-switch label="Flip-X" data-flip="x"></toggle-switch>
+          <toggle-switch label="Flip-Y" data-flip="y"></toggle-switch>
         </div>
       </div>
       `;
+
+    this.tilePreviews = shadow.querySelectorAll("tile-preview");
+    shadow.querySelectorAll("toggle-switch").forEach((toggleSwitch) => {
+      const axis = toggleSwitch.dataset.flip;
+      toggleSwitch.addEventListener("change", (event) => {
+        if (axis === "x") {
+          this.#flipX = event.detail.checked;
+        } else {
+          this.#flipY = event.detail.checked;
+        }
+        this.#render();
+      });
+    });
+
+    this.#render();
+  }
+
+  #render() {
+    const numRows = this.#tiles.length / MAP_WIDTH;
+    this.tilePreviews.forEach((tilePreview) => {
+      const position = Number(tilePreview.dataset.position);
+      const row = Math.floor(position / MAP_WIDTH);
+      const col = position % MAP_WIDTH;
+      const sourceRow = this.#flipY ? numRows - 1 - row : row;
+      const sourceCol = this.#flipX ? MAP_WIDTH - 1 - col : col;
+
+      tilePreview.setAttribute("tile-index", sourceRow * MAP_WIDTH + sourceCol);
+      tilePreview.toggleAttribute("flip-x", this.#flipX);
+      tilePreview.toggleAttribute("flip-y", this.#flipY);
+    });
   }
 }
 customElements.define("sprite-preview", SpritePreview);

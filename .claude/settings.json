@@ -1,9 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Edit(.vscode/html-custom-data.json)",
-      "Edit(.vscode/*)",
-      "Edit(CLAUDE.md)",
+      "Edit(/.vscode/html-custom-data.json)",
+      "Edit(/.vscode/*)",
+      "Edit(/CLAUDE.md)",
       "Bash(npx prettier --check *)"
     ]
   }

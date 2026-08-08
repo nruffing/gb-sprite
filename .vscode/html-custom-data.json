@@ -96,6 +96,14 @@
         {
           "name": "tile-index",
           "description": "Index into tileStore.tiles to render."
+        },
+        {
+          "name": "flip-x",
+          "description": "Present to mirror the tile horizontally when drawing (remaps pixel destination coordinates, not a canvas/CSS transform)."
+        },
+        {
+          "name": "flip-y",
+          "description": "Present to mirror the tile vertically when drawing (remaps pixel destination coordinates, not a canvas/CSS transform)."
         }
       ]
     }

@@ -12,7 +12,7 @@ const EMPTY_PIXELS = new Array(PIXEL_COUNT).fill(0);
 // blank if unset.
 class TilePreview extends HTMLElement {
   static get observedAttributes() {
-    return ["scale", "tile-index"];
+    return ["scale", "tile-index", "flip-x", "flip-y"];
   }
 
   constructor() {
@@ -61,12 +61,18 @@ class TilePreview extends HTMLElement {
     const ctx = this.canvas.getContext("2d");
     const computedStyle = getComputedStyle(this);
     const pixels = this.#resolvePixels();
+    const flipX = this.hasAttribute("flip-x");
+    const flipY = this.hasAttribute("flip-y");
 
     pixels.forEach((colorIndex, index) => {
+      const x = index % TILE_SIDE;
+      const y = Math.floor(index / TILE_SIDE);
+      const drawX = flipX ? TILE_SIDE - 1 - x : x;
+      const drawY = flipY ? TILE_SIDE - 1 - y : y;
       ctx.fillStyle = computedStyle.getPropertyValue(
         `--gbs-palette-${colorIndex}`,
       );
-      ctx.fillRect(index % TILE_SIDE, Math.floor(index / TILE_SIDE), 1, 1);
+      ctx.fillRect(drawX, drawY, 1, 1);
     });
   }
 }
