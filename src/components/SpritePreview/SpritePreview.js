@@ -12,8 +12,8 @@ class SpritePreview extends HTMLElement {
         <div class="preview">
         ${this.#tiles
           .map(
-            () => /* html */ `
-          <tile-preview scale="12"></tile-preview>
+            (_tile, index) => /* html */ `
+          <tile-preview scale="12" tile-index="${index}"></tile-preview>
           `,
           )
           .join("")}

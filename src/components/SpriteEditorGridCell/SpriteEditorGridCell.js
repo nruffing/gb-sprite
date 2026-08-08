@@ -1,7 +1,7 @@
 import styles from "./SpriteEditorGridCell.css?inline";
 import { paletteStore } from "../../state/paletteStore.js";
 import { pointerState } from "../../state/pointerState.js";
-import { spriteStore } from "../../state/spriteStore.js";
+import { tileStore } from "../../state/tileStore.js";
 
 class SpriteEditorGridCell extends HTMLElement {
   constructor() {
@@ -17,7 +17,7 @@ class SpriteEditorGridCell extends HTMLElement {
     const paint = () => {
       const colorIndex = paletteStore.selectedColorIndex;
       cell.className = `filled-${colorIndex}`;
-      spriteStore.setPixel(index, colorIndex);
+      tileStore.setPixel(index, colorIndex);
     };
 
     cell.addEventListener("pointerdown", paint);

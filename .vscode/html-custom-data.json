@@ -54,16 +54,25 @@
     },
     {
       "name": "tile-gallery",
-      "description": "Placeholder component (currently empty), defined in src/components/TileGallery/TileGallery.js.",
+      "description": "Renders a tile-preview for every tile in tileStore, defined in src/components/TileGallery/TileGallery.js.",
+      "attributes": []
+    },
+    {
+      "name": "sprite-preview",
+      "description": "Renders a tile-preview for every tile in tileStore laid out as the assembled sprite, defined in src/components/SpritePreview/SpritePreview.js.",
       "attributes": []
     },
     {
       "name": "tile-preview",
-      "description": "Renders an 8x8 tile to a canvas at a given pixel scale with no seams between pixels, defined in src/components/TilePreview/TilePreview.js. Mirrors the sprite being edited by default; set the `pixels` JS property to show a different tile instead.",
+      "description": "Renders an 8x8 tile to a canvas at a given pixel scale with no seams between pixels, defined in src/components/TilePreview/TilePreview.js. Set `tile-index` to show that tile from tileStore; renders blank if unset.",
       "attributes": [
         {
           "name": "scale",
           "description": "CSS pixels per tile pixel (default 4)."
+        },
+        {
+          "name": "tile-index",
+          "description": "Index into tileStore.tiles to render."
         }
       ]
     }

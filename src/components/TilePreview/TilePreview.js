@@ -1,21 +1,19 @@
 import styles from "./TilePreview.css?inline";
-import { spriteStore } from "../../state/spriteStore.js";
+import { tileStore, PIXEL_COUNT } from "../../state/tileStore.js";
 
 const TILE_SIDE = 8;
 const DEFAULT_SCALE = 4;
+const EMPTY_PIXELS = new Array(PIXEL_COUNT).fill(0);
 
 // Renders a tile to a <canvas> (rather than a grid of elements) so pixels
 // sit adjacent with zero seams at any scale factor, including non-integer ones.
 //
-// Defaults to mirroring the sprite currently being edited. Setting `.pixels`
-// explicitly (e.g. to preview a gallery tile) detaches it from spriteStore.
+// Set the `tile-index` attribute to show that tile from tileStore; renders
+// blank if unset.
 class TilePreview extends HTMLElement {
   static get observedAttributes() {
-    return ["scale"];
+    return ["scale", "tile-index"];
   }
-
-  #pixels = spriteStore.pixels;
-  #followingSpriteStore = true;
 
   constructor() {
     super();
@@ -27,34 +25,31 @@ class TilePreview extends HTMLElement {
     this.canvas = shadow.querySelector("canvas");
   }
 
-  get pixels() {
-    return this.#pixels;
-  }
-
-  set pixels(pixels) {
-    this.#followingSpriteStore = false;
-    this.#pixels = pixels;
-    this.render();
-  }
-
   connectedCallback() {
-    spriteStore.addEventListener("change", this.#onSpriteChange);
+    tileStore.addEventListener("change", this.#onTileStoreChange);
     this.render();
   }
 
   disconnectedCallback() {
-    spriteStore.removeEventListener("change", this.#onSpriteChange);
+    tileStore.removeEventListener("change", this.#onTileStoreChange);
   }
 
   attributeChangedCallback() {
     this.render();
   }
 
-  #onSpriteChange = ({ detail }) => {
-    if (!this.#followingSpriteStore) return;
-    this.#pixels = detail.pixels;
+  #onTileStoreChange = () => {
     this.render();
   };
+
+  #resolvePixels() {
+    const tileIndexAttr = this.getAttribute("tile-index");
+    if (tileIndexAttr === null) {
+      return EMPTY_PIXELS;
+    }
+    const tile = tileStore.tiles[Number(tileIndexAttr)];
+    return tile ? tile.pixels : EMPTY_PIXELS;
+  }
 
   render() {
     const scale = Number(this.getAttribute("scale")) || DEFAULT_SCALE;
@@ -65,8 +60,9 @@ class TilePreview extends HTMLElement {
 
     const ctx = this.canvas.getContext("2d");
     const computedStyle = getComputedStyle(this);
+    const pixels = this.#resolvePixels();
 
-    this.#pixels.forEach((colorIndex, index) => {
+    pixels.forEach((colorIndex, index) => {
       ctx.fillStyle = computedStyle.getPropertyValue(
         `--gbs-palette-${colorIndex}`,
       );

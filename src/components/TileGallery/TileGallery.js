@@ -12,8 +12,8 @@ class TileGallery extends HTMLElement {
       <div class="gallery">
         ${this.#tiles
           .map(
-            () => /* html */ `
-          <tile-preview scale="10"></tile-preview>
+            (_tile, index) => /* html */ `
+          <tile-preview scale="10" tile-index="${index}"></tile-preview>
           `,
           )
           .join("")}

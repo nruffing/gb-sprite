@@ -99,7 +99,8 @@ body {
   grid-template-areas:
     "left right"
     "bottom bottom";
-  gap: var(--gbs-spacer-600);
+  column-gap: var(--gbs-spacer-900);
+  row-gap: var(--gbs-spacer-700);
   padding: var(--gbs-spacer-200);
   font-family: var(--font-family);
   font-size: var(--gbs-font-size-200);
