@@ -62,6 +62,7 @@ Other commands:
 
 ```sh
 npm run build         # production build
+npm run build:pages   # production build with the /gb-sprite/ base path GitHub Pages needs
 npm run preview       # preview the production build locally
 npm run format        # format all files with Prettier
 npm run format:check  # check formatting without writing (what CI runs)
@@ -69,6 +70,11 @@ npm test              # run unit tests (Vitest) once
 npm run test:watch    # run unit tests in watch mode
 ```
 
-## CI
+## CI / Deployment
 
-`.github/workflows/ci.yml` runs on every push and pull request to `main`: install (`npm ci`), `format:check`, `test`, and `build`, on the Node version pinned in `.nvmrc`, then uploads `dist/` as a workflow artifact (named `dist`, kept 14 days).
+`.github/workflows/ci.yml` has two jobs:
+
+- **`build-and-test`** — runs on every push and pull request to `main`: install (`npm ci`), `format:check`, `test`, and `build`, on the Node version pinned in `.nvmrc`, then uploads `dist/` as a workflow artifact (named `dist`, kept 90 days).
+- **`deploy`** — runs only on pushes to `main` (never on PRs), after `build-and-test` succeeds. Rebuilds with `build:pages` (Vite's default `base: "/"` breaks asset paths once served from a project subpath like `https://nruffing.github.io/gb-sprite/`) and publishes to GitHub Pages via the official `configure-pages`/`upload-pages-artifact`/`deploy-pages` actions.
+
+One-time manual setup this repo needs for `deploy` to work: in GitHub repo Settings → Pages → Build and deployment → Source, select **GitHub Actions** (not "Deploy from a branch").

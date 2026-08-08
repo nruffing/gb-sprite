@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -27,3 +30,40 @@ jobs:
           name: dist
           path: dist/
           retention-days: 90
+
+  # Publishes to GitHub Pages, only from pushes to main (never from PRs, which
+  # may come from forks without deploy permissions). Rebuilds with a
+  # `/gb-sprite/`-relative base rather than reusing the build-and-test
+  # artifact, since Pages serves this project at that subpath, not root.
+  deploy:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - run: npm ci
+      - run: npm run build:pages
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist/
+
+      - uses: actions/deploy-pages@v5
+        id: deployment

@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-See `README.md` for dev setup. In short: `npm run dev` / `npm run build` / `npm run preview` / `npm test`. There is no linter or type checker configured yet. Formatting is handled by Prettier (`.prettierrc`); VS Code is configured to format on save with the Prettier extension. Unit tests use Vitest (`vitest.config.js`), currently running in the default `node` test environment (no `jsdom`/`happy-dom` configured) — see Testing below for what that does and doesn't cover. `.github/workflows/ci.yml` runs `format:check` / `test` / `build` on every push and PR to `main`, then uploads `dist/` as a workflow artifact.
+See `README.md` for dev setup. In short: `npm run dev` / `npm run build` / `npm run preview` / `npm test`. There is no linter or type checker configured yet. Formatting is handled by Prettier (`.prettierrc`); VS Code is configured to format on save with the Prettier extension. Unit tests use Vitest (`vitest.config.js`), currently running in the default `node` test environment (no `jsdom`/`happy-dom` configured) — see Testing below for what that does and doesn't cover. `.github/workflows/ci.yml` runs `format:check` / `test` / `build` on every push and PR to `main`, then uploads `dist/` as a workflow artifact; a second job deploys to GitHub Pages on pushes to `main` only, rebuilding via `npm run build:pages` (a `/gb-sprite/`-relative base, since Pages serves this project from that subpath rather than root).
 
 ## Testing
 
