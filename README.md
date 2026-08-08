@@ -4,6 +4,8 @@
 
 A Game Boy sprite editor web app, built with Vite and vanilla JavaScript (no framework), using native Web Components.
 
+**Live at [nruffing.github.io/gb-sprite](https://nruffing.github.io/gb-sprite/).**
+
 Inspired-by [Game Boy Tile Tool](https://nathanheffley.itch.io/game-boy-tile-tool).
 
 This is an attempt to provide some improved ergonomics and additional tooling to support a wholistic workflow.
@@ -72,7 +74,7 @@ npm run test:watch    # run unit tests in watch mode
 
 ## CI / Deployment
 
-`.github/workflows/ci.yml` has two jobs:
+`.github/workflows/ci.yml` only triggers on pushes/PRs that touch `src/**` or `public/**` — changes elsewhere (docs, workflow config, etc.) don't run it. Has two jobs:
 
 - **`build-and-test`** — runs on every push and pull request to `main`: install (`npm ci`), `format:check`, `test`, and `build`, on the Node version pinned in `.nvmrc`, then uploads `dist/` as a workflow artifact (named `dist`, kept 90 days).
 - **`deploy`** — runs only on pushes to `main` (never on PRs), after `build-and-test` succeeds. Rebuilds with `build:pages` (Vite's default `base: "/"` breaks asset paths once served from a project subpath like `https://nruffing.github.io/gb-sprite/`) and publishes to GitHub Pages via the official `configure-pages`/`upload-pages-artifact`/`deploy-pages` actions.
