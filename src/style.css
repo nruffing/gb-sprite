@@ -100,23 +100,36 @@
   --toggle-thumb-color: var(--gbs-color-default-0);
   --toggle-transition-duration: 150ms;
   --toggle-focus-outline: 2px solid var(--gbs-color-highlight);
+
+  --app-height: 100%;
+  --container-padding: var(--gbs-spacer-500);
+  --container-gap: var(--gbs-spacer-300);
+
+  --panel-default-width: 300px;
+}
+
+html,
+body {
+  height: var(--app-height);
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   background-color: var(--background-color);
 }
 
 #app {
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: auto 1fr;
+  min-height: var(--app-height);
+  grid-template-columns: max-content 1fr max-content;
+  grid-template-rows: max-content 1fr;
   grid-template-areas:
-    "left right"
-    "bottom bottom";
-  column-gap: var(--gbs-spacer-900);
-  row-gap: var(--gbs-spacer-700);
-  padding: var(--gbs-spacer-500);
+    "left right right-panel"
+    "bottom bottom right-panel";
+  gap: 0;
+  padding: 0;
   font-family: var(--font-family);
   font-size: var(--gbs-font-size-200);
   font-weight: var(--gbs-font-weight-default);
@@ -127,15 +140,26 @@ body {
   grid-area: left;
   display: flex;
   flex-direction: column;
-  gap: var(--gbs-spacer-300);
+  gap: var(--container-gap);
+  padding: var(--container-padding);
 }
 
 #app > .right {
   grid-area: right;
+  gap: var(--container-gap);
+  padding: var(--container-padding);
 }
 
 #app > .bottom {
   grid-area: bottom;
+  margin: var(--container-padding);
+}
+
+#app > .right-panel {
+  grid-area: right-panel;
+  width: var(--panel-default-width);
+  border: none;
+  border-left: var(--divider-border);
 }
 
 .divider-top {

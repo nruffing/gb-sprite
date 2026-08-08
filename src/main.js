@@ -10,6 +10,7 @@ import "./components/TilePreview/TilePreview.js";
 import "./components/SpritePreview/SpritePreview.js";
 import "./components/TilesetIO/TilesetIO.js";
 import "./components/ToggleSwitch/ToggleSwitch.js";
+import "./components/DynamicPanel/DynamicPanel.js";
 
 const isTextInput = (target) =>
   target instanceof HTMLElement &&
