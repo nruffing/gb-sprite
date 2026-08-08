@@ -158,8 +158,6 @@ body {
 #app > .right-panel {
   grid-area: right-panel;
   width: var(--panel-default-width);
-  border: none;
-  border-left: var(--divider-border);
 }
 
 .divider-top {

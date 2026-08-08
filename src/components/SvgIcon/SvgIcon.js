@@ -8,22 +8,24 @@ class SvgIcon extends HTMLElement {
     return ["name"];
   }
 
+  #shadow;
+
   constructor() {
     super();
-    this.shadow = this.attachShadow({ mode: "open" });
-    this.shadow.innerHTML = /* html */ `<style>${styles}</style>`;
+    this.#shadow = this.attachShadow({ mode: "open" });
+    this.#shadow.innerHTML = /* html */ `<style>${styles}</style>`;
   }
 
   connectedCallback() {
-    this.render();
+    this.#render();
   }
 
   attributeChangedCallback() {
-    this.render();
+    this.#render();
   }
 
-  render() {
-    this.shadow.querySelector("svg")?.remove();
+  #render() {
+    this.#shadow.querySelector("svg")?.remove();
 
     const icon = ICONS[this.getAttribute("name")];
     if (!icon) return;
@@ -39,7 +41,7 @@ class SvgIcon extends HTMLElement {
       svg.appendChild(path);
     }
 
-    this.shadow.appendChild(svg);
+    this.#shadow.appendChild(svg);
   }
 }
 customElements.define("svg-icon", SvgIcon);

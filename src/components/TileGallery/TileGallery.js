@@ -3,6 +3,7 @@ import { tileStore } from "../../state/tileStore";
 
 class TileGallery extends HTMLElement {
   #tiles = tileStore.tiles;
+  #tileElements;
 
   constructor() {
     super();
@@ -22,8 +23,8 @@ class TileGallery extends HTMLElement {
           .join("")}
       </div>
     `;
-    this.tileElements = shadow.querySelectorAll(".tile");
-    this.tileElements.forEach((tile) => {
+    this.#tileElements = shadow.querySelectorAll(".tile");
+    this.#tileElements.forEach((tile) => {
       tile.addEventListener("click", () => {
         tileStore.setSelectedTileIndex(Number(tile.dataset.index));
       });
@@ -40,7 +41,7 @@ class TileGallery extends HTMLElement {
   }
 
   #updateSelected = () => {
-    this.tileElements.forEach((tile) => {
+    this.#tileElements.forEach((tile) => {
       tile.classList.toggle(
         "selected",
         Number(tile.dataset.index) === tileStore.selectedTileIndex,

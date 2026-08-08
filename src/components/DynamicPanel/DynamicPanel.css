@@ -1,3 +1,8 @@
 .panel {
   display: grid;
+  border: none;
+}
+
+.panel.resize-left {
+  border-left: var(--divider-border);
 }

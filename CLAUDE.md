@@ -27,6 +27,8 @@ A function that needs `document`/`window`/canvas (e.g. `highlightCCode.js`) or r
 
 When adding new UI pieces, follow the existing pattern: a subfolder per component under `src/components/` with a co-located `.css` file, shared cross-component state lives in `src/state/` as an `EventTarget`-based store, and new design-token values go in `src/style.css` following the existing `--gbs-*` scale conventions.
 
+**Component encapsulation**: a component's DOM refs (`shadow.querySelector(...)` results) and internal state are instance fields — always declare them as private (`#foo`), never as plain `this.foo = ...`. Same for methods like an internal `#render()` that only the component itself calls. The only public surface a component exposes is deliberate external API — e.g. `ToggleSwitch`'s `checked` getter/setter, which mirrors native `<input>.checked` and is meant to be read/set from outside. When writing or touching a component, default new members to private and only make something public if there's a real caller outside the class for it — don't leave `this.foo = ...` public just because it was convenient to type in the constructor.
+
 ## Keeping docs in sync
 
 Whenever a component is added, removed, or its attributes change, update `.vscode/html-custom-data.json` to match as part of that same change — don't ask first, just do it. Likewise, when the architecture or conventions described above change, update this file (`CLAUDE.md`) directly rather than letting it drift. The same applies to tooling: whenever a dev-facing tool, script, or hook changes (e.g. new `package.json` scripts, linters, formatters, git hooks), update `README.md`'s dev setup section to match as part of that same change.

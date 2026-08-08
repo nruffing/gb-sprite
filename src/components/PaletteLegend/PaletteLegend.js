@@ -9,6 +9,8 @@ const PALETTE = [
 ];
 
 class PaletteLegend extends HTMLElement {
+  #swatches;
+
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
@@ -26,9 +28,9 @@ class PaletteLegend extends HTMLElement {
       </div>
     `;
 
-    this.swatches = shadow.querySelectorAll(".swatch");
+    this.#swatches = shadow.querySelectorAll(".swatch");
 
-    this.swatches.forEach((swatch) => {
+    this.#swatches.forEach((swatch) => {
       swatch.addEventListener("click", () => {
         paletteStore.setSelectedColorIndex(Number(swatch.dataset.index));
       });
@@ -45,7 +47,7 @@ class PaletteLegend extends HTMLElement {
   }
 
   #updateSelected = () => {
-    this.swatches.forEach((swatch) => {
+    this.#swatches.forEach((swatch) => {
       swatch.classList.toggle(
         "selected",
         Number(swatch.dataset.index) === paletteStore.selectedColorIndex,

@@ -15,6 +15,9 @@ import styles from "./ToggleSwitch.css?inline";
 class ToggleSwitch extends HTMLElement {
   static observedAttributes = ["checked"];
 
+  #button;
+  #labelText;
+
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
@@ -27,9 +30,9 @@ class ToggleSwitch extends HTMLElement {
         </button>
       </label>
     `;
-    this.button = shadow.querySelector("button");
-    this.labelText = shadow.querySelector(".label-text");
-    this.button.addEventListener("click", () => {
+    this.#button = shadow.querySelector("button");
+    this.#labelText = shadow.querySelector(".label-text");
+    this.#button.addEventListener("click", () => {
       this.checked = !this.checked;
       this.dispatchEvent(
         new CustomEvent("change", {
@@ -43,13 +46,13 @@ class ToggleSwitch extends HTMLElement {
 
   connectedCallback() {
     const label = this.getAttribute("label") ?? "";
-    this.labelText.textContent = label;
-    this.labelText.hidden = label === "";
-    this.render();
+    this.#labelText.textContent = label;
+    this.#labelText.hidden = label === "";
+    this.#render();
   }
 
   attributeChangedCallback() {
-    this.render();
+    this.#render();
   }
 
   get checked() {
@@ -60,10 +63,10 @@ class ToggleSwitch extends HTMLElement {
     this.toggleAttribute("checked", Boolean(value));
   }
 
-  render() {
-    if (!this.button) return;
-    this.button.setAttribute("aria-checked", String(this.checked));
-    this.button.classList.toggle("checked", this.checked);
+  #render() {
+    if (!this.#button) return;
+    this.#button.setAttribute("aria-checked", String(this.checked));
+    this.#button.classList.toggle("checked", this.checked);
   }
 }
 customElements.define("toggle-switch", ToggleSwitch);

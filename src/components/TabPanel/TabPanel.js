@@ -8,6 +8,9 @@ import "../SvgIcon/SvgIcon.js";
 // dynamic. The `data-default-tab` attribute (matched against a child's
 // `tab-label`) selects which tab is shown on load; it falls back to the first tab.
 class TabPanel extends HTMLElement {
+  #tabButtons;
+  #panels;
+
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
@@ -22,7 +25,7 @@ class TabPanel extends HTMLElement {
     const tabsContainer = this.shadowRoot.querySelector(".tabs");
     const panels = Array.from(this.children);
 
-    this.tabButtons = panels.map((panel, index) => {
+    this.#tabButtons = panels.map((panel, index) => {
       const button = document.createElement("button");
       button.type = "button";
 
@@ -38,25 +41,25 @@ class TabPanel extends HTMLElement {
         ),
       );
 
-      button.addEventListener("click", () => this.selectIndex(index));
+      button.addEventListener("click", () => this.#selectIndex(index));
       tabsContainer.appendChild(button);
       return button;
     });
 
-    this.panels = panels;
+    this.#panels = panels;
 
     const defaultTab = this.dataset.defaultTab;
     const defaultIndex = panels.findIndex(
       (panel) => panel.getAttribute("tab-label") === defaultTab,
     );
-    this.selectIndex(defaultIndex === -1 ? 0 : defaultIndex);
+    this.#selectIndex(defaultIndex === -1 ? 0 : defaultIndex);
   }
 
-  selectIndex(index) {
-    this.panels.forEach((panel, i) => {
+  #selectIndex(index) {
+    this.#panels.forEach((panel, i) => {
       panel.hidden = i !== index;
     });
-    this.tabButtons.forEach((button, i) => {
+    this.#tabButtons.forEach((button, i) => {
       button.classList.toggle("selected", i === index);
     });
   }

@@ -44,5 +44,7 @@ class DynamicPanel extends HTMLElement {
   get resizeFlags() {
     return this.#resizeFlags;
   }
+
+  #render = () => {};
 }
 customElements.define("dynamic-panel", DynamicPanel);

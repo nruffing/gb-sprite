@@ -26,6 +26,9 @@ function downloadBlob(blob, filename) {
 // PNG nor the GBDK C source CodePreview generates round-trip back in — both
 // are one-way exports for use elsewhere.
 class TilesetIO extends HTMLElement {
+  #fileInput;
+  #statusElement;
+
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
@@ -43,8 +46,8 @@ class TilesetIO extends HTMLElement {
       <p class="status" role="status"></p>
     `;
 
-    this.fileInput = shadow.querySelector("input");
-    this.statusElement = shadow.querySelector(".status");
+    this.#fileInput = shadow.querySelector("input");
+    this.#statusElement = shadow.querySelector(".status");
 
     shadow
       .querySelector('[name="exportTileset"]')
@@ -52,7 +55,7 @@ class TilesetIO extends HTMLElement {
     shadow
       .querySelector('[name="exportPng"]')
       .addEventListener("click", () => this.#exportPng());
-    this.fileInput.addEventListener("change", () => this.#importTileset());
+    this.#fileInput.addEventListener("change", () => this.#importTileset());
   }
 
   #exportTileset() {
@@ -75,8 +78,8 @@ class TilesetIO extends HTMLElement {
   }
 
   async #importTileset() {
-    const [file] = this.fileInput.files;
-    this.fileInput.value = "";
+    const [file] = this.#fileInput.files;
+    this.#fileInput.value = "";
     if (!file) return;
 
     let data;
@@ -95,7 +98,7 @@ class TilesetIO extends HTMLElement {
   }
 
   #setStatus(message) {
-    this.statusElement.textContent = message;
+    this.#statusElement.textContent = message;
   }
 }
 customElements.define("tileset-io", TilesetIO);

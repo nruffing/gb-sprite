@@ -10,6 +10,7 @@ class SpritePreview extends HTMLElement {
   #tiles = tileStore.tiles;
   #flipX = false;
   #flipY = false;
+  #tilePreviews;
 
   constructor() {
     super();
@@ -33,7 +34,7 @@ class SpritePreview extends HTMLElement {
       </div>
       `;
 
-    this.tilePreviews = shadow.querySelectorAll("tile-preview");
+    this.#tilePreviews = shadow.querySelectorAll("tile-preview");
     shadow.querySelectorAll("toggle-switch").forEach((toggleSwitch) => {
       const axis = toggleSwitch.dataset.flip;
       toggleSwitch.addEventListener("change", (event) => {
@@ -51,7 +52,7 @@ class SpritePreview extends HTMLElement {
 
   #render() {
     const numRows = this.#tiles.length / MAP_WIDTH;
-    this.tilePreviews.forEach((tilePreview) => {
+    this.#tilePreviews.forEach((tilePreview) => {
       const position = Number(tilePreview.dataset.position);
       const row = Math.floor(position / MAP_WIDTH);
       const col = position % MAP_WIDTH;

@@ -5,6 +5,7 @@ import { tileStore } from "../../state/tileStore.js";
 
 class SpriteEditorGridCell extends HTMLElement {
   #index;
+  #cell;
 
   constructor() {
     super();
@@ -14,15 +15,15 @@ class SpriteEditorGridCell extends HTMLElement {
       <div></div>
     `;
 
-    this.cell = shadow.querySelector("div");
+    this.#cell = shadow.querySelector("div");
     this.#index = Number(this.getAttribute("index"));
 
     const paint = () => {
       tileStore.setPixel(this.#index, paletteStore.selectedColorIndex);
     };
 
-    this.cell.addEventListener("pointerdown", paint);
-    this.cell.addEventListener("pointerenter", () => {
+    this.#cell.addEventListener("pointerdown", paint);
+    this.#cell.addEventListener("pointerenter", () => {
       if (pointerState.isDown) paint();
     });
   }
@@ -39,7 +40,7 @@ class SpriteEditorGridCell extends HTMLElement {
   #render = () => {
     const tile = tileStore.tiles[tileStore.selectedTileIndex];
     const colorIndex = tile ? tile.pixels[this.#index] : 0;
-    this.cell.className = `filled-${colorIndex}`;
+    this.#cell.className = `filled-${colorIndex}`;
   };
 }
 customElements.define("sprite-editor-grid-cell", SpriteEditorGridCell);

@@ -8,6 +8,11 @@ import "../SvgIcon/SvgIcon.js";
 const DEFAULT_TILESET_NAME = "Tileset";
 
 class CodePreview extends HTMLElement {
+  #nameInput;
+  #copyButton;
+  #codeElement;
+  #currentCode = "";
+
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
@@ -27,14 +32,13 @@ class CodePreview extends HTMLElement {
       </div>
     `;
 
-    this.nameInput = shadow.querySelector("input");
-    this.copyButton = shadow.querySelector("button");
-    this.codeElement = shadow.querySelector("code");
-    this.currentCode = "";
+    this.#nameInput = shadow.querySelector("input");
+    this.#copyButton = shadow.querySelector("button");
+    this.#codeElement = shadow.querySelector("code");
 
-    this.nameInput.addEventListener("input", this.#render);
-    this.copyButton.addEventListener("click", () => {
-      navigator.clipboard.writeText(this.currentCode);
+    this.#nameInput.addEventListener("input", this.#render);
+    this.#copyButton.addEventListener("click", () => {
+      navigator.clipboard.writeText(this.#currentCode);
     });
   }
 
@@ -48,7 +52,7 @@ class CodePreview extends HTMLElement {
   }
 
   #render = () => {
-    const tilesetName = this.nameInput.value || "Tileset";
+    const tilesetName = this.#nameInput.value || "Tileset";
     const tilesCode = generateTilesCode(
       tilesetName,
       tileStore.tiles.map((tile) => tile.pixels),
@@ -58,8 +62,8 @@ class CodePreview extends HTMLElement {
       tileStore.tiles.length,
       MAP_WIDTH,
     );
-    this.currentCode = `${tilesCode}\n\n${mapCode}`;
-    this.codeElement.replaceChildren(highlightCCode(this.currentCode));
+    this.#currentCode = `${tilesCode}\n\n${mapCode}`;
+    this.#codeElement.replaceChildren(highlightCCode(this.#currentCode));
   };
 }
 customElements.define("code-preview", CodePreview);

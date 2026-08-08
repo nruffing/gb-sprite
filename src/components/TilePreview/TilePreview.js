@@ -15,6 +15,8 @@ class TilePreview extends HTMLElement {
     return ["scale", "tile-index", "flip-x", "flip-y"];
   }
 
+  #canvas;
+
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
@@ -22,12 +24,12 @@ class TilePreview extends HTMLElement {
       <style>${styles}</style>
       <canvas></canvas>
     `;
-    this.canvas = shadow.querySelector("canvas");
+    this.#canvas = shadow.querySelector("canvas");
   }
 
   connectedCallback() {
     tileStore.addEventListener("change", this.#onTileStoreChange);
-    this.render();
+    this.#render();
   }
 
   disconnectedCallback() {
@@ -35,11 +37,11 @@ class TilePreview extends HTMLElement {
   }
 
   attributeChangedCallback() {
-    this.render();
+    this.#render();
   }
 
   #onTileStoreChange = () => {
-    this.render();
+    this.#render();
   };
 
   #resolvePixels() {
@@ -51,14 +53,14 @@ class TilePreview extends HTMLElement {
     return tile ? tile.pixels : EMPTY_PIXELS;
   }
 
-  render() {
+  #render() {
     const scale = Number(this.getAttribute("scale")) || DEFAULT_SCALE;
-    this.canvas.width = TILE_SIDE;
-    this.canvas.height = TILE_SIDE;
-    this.canvas.style.width = `${TILE_SIDE * scale}px`;
-    this.canvas.style.height = `${TILE_SIDE * scale}px`;
+    this.#canvas.width = TILE_SIDE;
+    this.#canvas.height = TILE_SIDE;
+    this.#canvas.style.width = `${TILE_SIDE * scale}px`;
+    this.#canvas.style.height = `${TILE_SIDE * scale}px`;
 
-    const ctx = this.canvas.getContext("2d");
+    const ctx = this.#canvas.getContext("2d");
     const computedStyle = getComputedStyle(this);
     const pixels = this.#resolvePixels();
     const flipX = this.hasAttribute("flip-x");
