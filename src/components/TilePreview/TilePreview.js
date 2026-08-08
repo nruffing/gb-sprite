@@ -1,18 +1,19 @@
 import styles from "./TilePreview.css?inline";
-import { tileStore, PIXEL_COUNT } from "../../state/tileStore.js";
+import { decodePixels } from "./pixelsAttribute.js";
 
 const TILE_SIDE = 8;
 const DEFAULT_SCALE = 4;
-const EMPTY_PIXELS = new Array(PIXEL_COUNT).fill(0);
 
 // Renders a tile to a <canvas> (rather than a grid of elements) so pixels
 // sit adjacent with zero seams at any scale factor, including non-integer ones.
 //
-// Set the `tile-index` attribute to show that tile from tileStore; renders
-// blank if unset.
+// Deliberately has no knowledge of tileStore — set the `pixels` attribute
+// (see pixelsAttribute.js) to the tile data to render; renders blank if
+// unset. Callers that read from tileStore (TileGallery, SpritePreview) own
+// encoding/updating that attribute themselves.
 class TilePreview extends HTMLElement {
   static get observedAttributes() {
-    return ["scale", "tile-index", "flip-x", "flip-y"];
+    return ["scale", "pixels", "flip-x", "flip-y"];
   }
 
   #canvas;
@@ -28,29 +29,11 @@ class TilePreview extends HTMLElement {
   }
 
   connectedCallback() {
-    tileStore.addEventListener("change", this.#onTileStoreChange);
     this.#render();
-  }
-
-  disconnectedCallback() {
-    tileStore.removeEventListener("change", this.#onTileStoreChange);
   }
 
   attributeChangedCallback() {
     this.#render();
-  }
-
-  #onTileStoreChange = () => {
-    this.#render();
-  };
-
-  #resolvePixels() {
-    const tileIndexAttr = this.getAttribute("tile-index");
-    if (tileIndexAttr === null) {
-      return EMPTY_PIXELS;
-    }
-    const tile = tileStore.tiles[Number(tileIndexAttr)];
-    return tile ? tile.pixels : EMPTY_PIXELS;
   }
 
   #render() {
@@ -61,8 +44,12 @@ class TilePreview extends HTMLElement {
     this.#canvas.style.height = `${TILE_SIDE * scale}px`;
 
     const ctx = this.#canvas.getContext("2d");
+    ctx.clearRect(0, 0, TILE_SIDE, TILE_SIDE);
+
+    const pixels = decodePixels(this.getAttribute("pixels"));
+    if (!pixels) return;
+
     const computedStyle = getComputedStyle(this);
-    const pixels = this.#resolvePixels();
     const flipX = this.hasAttribute("flip-x");
     const flipY = this.hasAttribute("flip-y");
 
