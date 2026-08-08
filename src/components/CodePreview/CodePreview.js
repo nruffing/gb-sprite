@@ -27,34 +27,39 @@ class CodePreview extends HTMLElement {
       </div>
     `;
 
-    const nameInput = shadow.querySelector("input");
-    const copyButton = shadow.querySelector("button");
-    const codeElement = shadow.querySelector("code");
+    this.nameInput = shadow.querySelector("input");
+    this.copyButton = shadow.querySelector("button");
+    this.codeElement = shadow.querySelector("code");
+    this.currentCode = "";
 
-    let currentCode = "";
-
-    const render = () => {
-      const tilesetName = nameInput.value || "Tileset";
-      const tilesCode = generateTilesCode(
-        tilesetName,
-        tileStore.tiles.map((tile) => tile.pixels),
-      );
-      const mapCode = generateMapCode(
-        tilesetName,
-        tileStore.tiles.length,
-        MAP_WIDTH,
-      );
-      currentCode = `${tilesCode}\n\n${mapCode}`;
-      codeElement.replaceChildren(highlightCCode(currentCode));
-    };
-
-    nameInput.addEventListener("input", render);
-    copyButton.addEventListener("click", () => {
-      navigator.clipboard.writeText(currentCode);
+    this.nameInput.addEventListener("input", this.#render);
+    this.copyButton.addEventListener("click", () => {
+      navigator.clipboard.writeText(this.currentCode);
     });
-    tileStore.addEventListener("change", render);
-
-    render();
   }
+
+  connectedCallback() {
+    tileStore.addEventListener("change", this.#render);
+    this.#render();
+  }
+
+  disconnectedCallback() {
+    tileStore.removeEventListener("change", this.#render);
+  }
+
+  #render = () => {
+    const tilesetName = this.nameInput.value || "Tileset";
+    const tilesCode = generateTilesCode(
+      tilesetName,
+      tileStore.tiles.map((tile) => tile.pixels),
+    );
+    const mapCode = generateMapCode(
+      tilesetName,
+      tileStore.tiles.length,
+      MAP_WIDTH,
+    );
+    this.currentCode = `${tilesCode}\n\n${mapCode}`;
+    this.codeElement.replaceChildren(highlightCCode(this.currentCode));
+  };
 }
 customElements.define("code-preview", CodePreview);

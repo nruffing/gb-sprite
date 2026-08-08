@@ -26,23 +26,31 @@ class PaletteLegend extends HTMLElement {
       </div>
     `;
 
-    const swatches = shadow.querySelectorAll(".swatch");
-    const updateSelected = () => {
-      swatches.forEach((swatch) => {
-        swatch.classList.toggle(
-          "selected",
-          Number(swatch.dataset.index) === paletteStore.selectedColorIndex,
-        );
-      });
-    };
+    this.swatches = shadow.querySelectorAll(".swatch");
 
-    swatches.forEach((swatch) => {
+    this.swatches.forEach((swatch) => {
       swatch.addEventListener("click", () => {
         paletteStore.setSelectedColorIndex(Number(swatch.dataset.index));
       });
     });
-    paletteStore.addEventListener("change", updateSelected);
-    updateSelected();
   }
+
+  connectedCallback() {
+    paletteStore.addEventListener("change", this.#updateSelected);
+    this.#updateSelected();
+  }
+
+  disconnectedCallback() {
+    paletteStore.removeEventListener("change", this.#updateSelected);
+  }
+
+  #updateSelected = () => {
+    this.swatches.forEach((swatch) => {
+      swatch.classList.toggle(
+        "selected",
+        Number(swatch.dataset.index) === paletteStore.selectedColorIndex,
+      );
+    });
+  };
 }
 customElements.define("palette-legend", PaletteLegend);
