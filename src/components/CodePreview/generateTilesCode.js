@@ -1,9 +1,6 @@
-const BYTES_PER_LINE = 16;
+import { toHexByte } from "./hexUtils.js";
 
-function toHexByte(value) {
-  const hex = value.toString(16).toUpperCase();
-  return `0x${hex.length === 1 ? "0" : ""}${hex}`;
-}
+const BYTES_PER_LINE = 16;
 
 function tileRowToHexes(rowPixels) {
   const lsbBits = rowPixels.map((pixel) =>
@@ -18,10 +15,12 @@ function tileRowToHexes(rowPixels) {
   ];
 }
 
-export function generateTilesCode(tilesetName, pixels) {
+export function generateTilesCode(tilesetName, tiles) {
   const hexes = [];
-  for (let row = 0; row < 8; row++) {
-    hexes.push(...tileRowToHexes(pixels.slice(row * 8, row * 8 + 8)));
+  for (const pixels of tiles) {
+    for (let row = 0; row < 8; row++) {
+      hexes.push(...tileRowToHexes(pixels.slice(row * 8, row * 8 + 8)));
+    }
   }
 
   let output = `unsigned char ${tilesetName}Tiles[] =\n{\n    `;

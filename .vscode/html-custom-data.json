@@ -29,7 +29,7 @@
     },
     {
       "name": "code-preview",
-      "description": "Shows GBDK-2020 C source for the current sprite, with a copy-to-clipboard button, defined in src/components/CodePreview/CodePreview.js.",
+      "description": "Shows GBDK-2020 C source (tile bitmap data + the tileset map array) for all tiles in tileStore, with a copy-to-clipboard button, defined in src/components/CodePreview/CodePreview.js.",
       "attributes": []
     },
     {

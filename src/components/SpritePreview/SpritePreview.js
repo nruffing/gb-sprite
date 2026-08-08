@@ -1,5 +1,5 @@
 import styles from "./SpritePreview.css?inline";
-import { tileStore } from "../../state/tileStore";
+import { tileStore, MAP_WIDTH } from "../../state/tileStore";
 
 class SpritePreview extends HTMLElement {
   #tiles = tileStore.tiles;
@@ -9,7 +9,7 @@ class SpritePreview extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
     shadow.innerHTML = /* html */ `
         <style>${styles}</style>
-        <div class="preview">
+        <div class="preview" style="--map-width: ${MAP_WIDTH}">
         ${this.#tiles
           .map(
             (_tile, index) => /* html */ `

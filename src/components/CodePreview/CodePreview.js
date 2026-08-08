@@ -1,6 +1,7 @@
 import styles from "./CodePreview.css?inline";
-import { spriteStore } from "../../state/spriteStore.js";
+import { tileStore, MAP_WIDTH } from "../../state/tileStore.js";
 import { generateTilesCode } from "./generateTilesCode.js";
+import { generateMapCode } from "./generateMapCode.js";
 import { highlightCCode } from "./highlightCCode.js";
 import "../SvgIcon/SvgIcon.js";
 
@@ -33,10 +34,17 @@ class CodePreview extends HTMLElement {
     let currentCode = "";
 
     const render = () => {
-      currentCode = generateTilesCode(
-        nameInput.value || "Tileset",
-        spriteStore.pixels,
+      const tilesetName = nameInput.value || "Tileset";
+      const tilesCode = generateTilesCode(
+        tilesetName,
+        tileStore.tiles.map((tile) => tile.pixels),
       );
+      const mapCode = generateMapCode(
+        tilesetName,
+        tileStore.tiles.length,
+        MAP_WIDTH,
+      );
+      currentCode = `${tilesCode}\n\n${mapCode}`;
       codeElement.replaceChildren(highlightCCode(currentCode));
     };
 
@@ -44,7 +52,7 @@ class CodePreview extends HTMLElement {
     copyButton.addEventListener("click", () => {
       navigator.clipboard.writeText(currentCode);
     });
-    spriteStore.addEventListener("change", render);
+    tileStore.addEventListener("change", render);
 
     render();
   }

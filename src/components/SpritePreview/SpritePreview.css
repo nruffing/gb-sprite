@@ -1,4 +1,4 @@
 .preview {
   display: grid;
-  grid-template-columns: max-content max-content;
+  grid-template-columns: repeat(var(--map-width), max-content);
 }

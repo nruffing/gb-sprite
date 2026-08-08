@@ -1,4 +1,6 @@
 export const PIXEL_COUNT = 64; // 8x8 sprite tile
+export const MAP_WIDTH = 2; // tiles per row when tiles are laid out as a sprite/map
+
 const INITIAL_TILE_COUNT = 4;
 
 export class Tile {
