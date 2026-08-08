@@ -59,9 +59,14 @@ npm run dev
 Other commands:
 
 ```sh
-npm run build      # production build
-npm run preview    # preview the production build locally
-npm run format     # format all files with Prettier
-npm test           # run unit tests (Vitest) once
-npm run test:watch # run unit tests in watch mode
+npm run build         # production build
+npm run preview       # preview the production build locally
+npm run format        # format all files with Prettier
+npm run format:check  # check formatting without writing (what CI runs)
+npm test              # run unit tests (Vitest) once
+npm run test:watch    # run unit tests in watch mode
 ```
+
+## CI
+
+`.github/workflows/ci.yml` runs on every push and pull request to `main`: install (`npm ci`), `format:check`, `test`, and `build`, on the Node version pinned in `.nvmrc`, then uploads `dist/` as a workflow artifact (named `dist`, kept 14 days).
