@@ -1,5 +1,7 @@
 # gb-sprite
 
+[![CI](https://github.com/nruffing/gb-sprite/actions/workflows/ci.yml/badge.svg)](https://github.com/nruffing/gb-sprite/actions/workflows/ci.yml)
+
 A Game Boy sprite editor web app, built with Vite and vanilla JavaScript (no framework), using native Web Components.
 
 Inspired-by [Game Boy Tile Tool](https://nathanheffley.itch.io/game-boy-tile-tool).
