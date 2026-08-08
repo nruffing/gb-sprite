@@ -4,6 +4,8 @@ import { pointerState } from "../../state/pointerState.js";
 import { tileStore } from "../../state/tileStore.js";
 
 class SpriteEditorGridCell extends HTMLElement {
+  #index;
+
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
@@ -12,18 +14,32 @@ class SpriteEditorGridCell extends HTMLElement {
       <div></div>
     `;
 
-    const cell = shadow.querySelector("div");
-    const index = Number(this.getAttribute("index"));
+    this.cell = shadow.querySelector("div");
+    this.#index = Number(this.getAttribute("index"));
+
     const paint = () => {
-      const colorIndex = paletteStore.selectedColorIndex;
-      cell.className = `filled-${colorIndex}`;
-      tileStore.setPixel(index, colorIndex);
+      tileStore.setPixel(this.#index, paletteStore.selectedColorIndex);
     };
 
-    cell.addEventListener("pointerdown", paint);
-    cell.addEventListener("pointerenter", () => {
+    this.cell.addEventListener("pointerdown", paint);
+    this.cell.addEventListener("pointerenter", () => {
       if (pointerState.isDown) paint();
     });
   }
+
+  connectedCallback() {
+    tileStore.addEventListener("change", this.#render);
+    this.#render();
+  }
+
+  disconnectedCallback() {
+    tileStore.removeEventListener("change", this.#render);
+  }
+
+  #render = () => {
+    const tile = tileStore.tiles[tileStore.selectedTileIndex];
+    const colorIndex = tile ? tile.pixels[this.#index] : 0;
+    this.cell.className = `filled-${colorIndex}`;
+  };
 }
 customElements.define("sprite-editor-grid-cell", SpriteEditorGridCell);

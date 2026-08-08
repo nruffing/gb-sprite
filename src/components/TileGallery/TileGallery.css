@@ -7,3 +7,27 @@
   flex-direction: row;
   gap: var(--gbs-spacer-200);
 }
+
+.tile {
+  position: relative;
+  display: flex;
+  border: transparent solid var(--grid-border-width);
+  cursor: pointer;
+}
+
+.tile.selected {
+  border-color: var(--gbs-color-highlight);
+  cursor: default;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.tile.selected .overlay {
+  opacity: 1;
+  background-color: var(--gbs-color-highlight-overlay);
+}

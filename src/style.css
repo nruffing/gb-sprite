@@ -25,6 +25,11 @@
   --gbs-color-primary-1000: hsl(33 100% 0%);
 
   --gbs-color-highlight: var(--gbs-color-primary-500);
+  --gbs-color-highlight-overlay: color-mix(
+    in srgb,
+    var(--gbs-color-highlight) 35%,
+    transparent
+  );
   --gbs-color-hover: var(--gbs-color-primary-700);
   --gbs-color-hover-secondary: var(--gbs-color-default-0);
 
