@@ -10,6 +10,9 @@
 }
 
 .tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gbs-spacer-100);
   font: inherit;
   padding: var(--gbs-spacer-100) var(--gbs-spacer-300);
   margin-bottom: calc(var(--tab-underline-width) * -1);

@@ -4,6 +4,10 @@
     {
       "name": "tab-label",
       "description": "Used on a direct child of <tab-panel> to set that tab's button label. See src/components/TabPanel/TabPanel.js."
+    },
+    {
+      "name": "tab-icon",
+      "description": "Optional, used on a direct child of <tab-panel> to show an icon before that tab's label. Key into the ICONS registry (src/components/SvgIcon/icons.js), e.g. \"code\". See src/components/TabPanel/TabPanel.js."
     }
   ],
   "tags": [
@@ -38,7 +42,7 @@
       "attributes": [
         {
           "name": "name",
-          "description": "Key into the ICONS registry (src/components/SvgIcon/icons.js), e.g. \"copy\"."
+          "description": "Key into the ICONS registry (src/components/SvgIcon/icons.js), e.g. \"copy\", \"code\", \"save\", or \"grid\"."
         }
       ]
     },

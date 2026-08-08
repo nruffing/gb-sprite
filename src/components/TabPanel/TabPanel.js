@@ -1,10 +1,12 @@
 import styles from "./TabPanel.css?inline";
+import "../SvgIcon/SvgIcon.js";
 
 // Tabs are driven by light-DOM children: each direct child is one tab, labeled
-// via its `tab-label` attribute. Visibility is toggled with `hidden` on the
-// child itself rather than named <slot>s, since the set of children is dynamic.
-// The `data-default-tab` attribute (matched against a child's `tab-label`)
-// selects which tab is shown on load; it falls back to the first tab.
+// via its `tab-label` attribute (and optionally a leading icon via `tab-icon`,
+// a key into SvgIcon's ICONS registry). Visibility is toggled with `hidden` on
+// the child itself rather than named <slot>s, since the set of children is
+// dynamic. The `data-default-tab` attribute (matched against a child's
+// `tab-label`) selects which tab is shown on load; it falls back to the first tab.
 class TabPanel extends HTMLElement {
   constructor() {
     super();
@@ -23,8 +25,19 @@ class TabPanel extends HTMLElement {
     this.tabButtons = panels.map((panel, index) => {
       const button = document.createElement("button");
       button.type = "button";
-      button.textContent =
-        panel.getAttribute("tab-label") ?? `Tab ${index + 1}`;
+
+      const iconName = panel.getAttribute("tab-icon");
+      if (iconName) {
+        const icon = document.createElement("svg-icon");
+        icon.setAttribute("name", iconName);
+        button.appendChild(icon);
+      }
+      button.appendChild(
+        document.createTextNode(
+          panel.getAttribute("tab-label") ?? `Tab ${index + 1}`,
+        ),
+      );
+
       button.addEventListener("click", () => this.selectIndex(index));
       tabsContainer.appendChild(button);
       return button;
