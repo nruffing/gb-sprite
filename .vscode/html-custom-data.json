@@ -68,7 +68,7 @@
     },
     {
       "name": "tileset-io",
-      "description": "Export/import the current tileset as JSON (round-trips tileStore exactly), defined in src/components/TilesetIO/TilesetIO.js.",
+      "description": "Export/import the current tileset as JSON (round-trips tileStore exactly), and one-way export it as an indexed PNG sprite sheet, defined in src/components/TilesetIO/TilesetIO.js.",
       "attributes": []
     },
     {

@@ -3,7 +3,8 @@
 }
 
 .io {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
   gap: var(--gbs-spacer-200);
 }
 
