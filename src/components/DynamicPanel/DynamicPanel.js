@@ -42,6 +42,7 @@ class DynamicPanel extends HTMLElement {
           `,
           )
           .join("")}
+          <slot></slot>
       </div>
     `;
 
