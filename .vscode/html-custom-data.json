@@ -106,6 +106,16 @@
           "description": "Present to mirror the tile vertically when drawing (remaps pixel destination coordinates, not a canvas/CSS transform)."
         }
       ]
+    },
+    {
+      "name": "dynamic-panel",
+      "description": "Resizable side panel, defined in src/components/DynamicPanel/DynamicPanel.js.",
+      "attributes": [
+        {
+          "name": "resize",
+          "description": "Which edge(s) get a drag handle, written as ResizeOption key names joined by \"|\" (e.g. \"LEFT | TOP\"), parsed into a bitmask by parseResizeOption() in src/components/DynamicPanel/resizeOption.js. All four edges (LEFT/TOP/RIGHT/BOTTOM) parse, but DynamicPanel doesn't render or wire up any drag handles yet."
+        }
+      ]
     }
   ]
 }

@@ -6,7 +6,7 @@ const TILE_SIZE = 8;
 // mapWidth tiles each — the same arrangement SpritePreview renders and
 // generateMapCode encodes, matching the GBDK-2020 tooling convention of one
 // PNG frame per sprite (see -sw/-sh in png2asset).
-function buildSpritePixelGrid(tiles, mapWidth) {
+export function buildSpritePixelGrid(tiles, mapWidth) {
   const rows = Math.ceil(tiles.length / mapWidth);
   const width = mapWidth * TILE_SIZE;
   const height = rows * TILE_SIZE;
@@ -26,7 +26,7 @@ function buildSpritePixelGrid(tiles, mapWidth) {
   return { width, height, pixels };
 }
 
-function hexToRgb(hex) {
+export function hexToRgb(hex) {
   const match = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
   if (!match) {
     throw new Error(`[gb-sprite] couldn't parse palette color "${hex}"`);

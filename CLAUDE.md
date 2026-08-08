@@ -8,7 +8,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-See `README.md` for dev setup. In short: `npm run dev` / `npm run build` / `npm run preview`. There is no test suite, linter, or type checker configured yet. Formatting is handled by Prettier (`.prettierrc`); VS Code is configured to format on save with the Prettier extension.
+See `README.md` for dev setup. In short: `npm run dev` / `npm run build` / `npm run preview` / `npm test`. There is no linter or type checker configured yet. Formatting is handled by Prettier (`.prettierrc`); VS Code is configured to format on save with the Prettier extension. Unit tests use Vitest (`vitest.config.js`), currently running in the default `node` test environment (no `jsdom`/`happy-dom` configured) — see Testing below for what that does and doesn't cover.
+
+## Testing
+
+Every pure function (no DOM access, no shared/store state, output determined solely by its arguments) gets a co-located `*.test.js` file — write it as part of the same change that adds or modifies the function, without waiting to be asked. This covers plain utility modules (`hexUtils.js`, `generateMapCode.js`, `generateTilesCode.js`, `encodeIndexedPng.js`, `resizeOption.js`, etc.) in full, including their less-obvious edge cases (empty/boundary input, error paths), not just a happy-path smoke test.
+
+A function that needs `document`/`window`/canvas (e.g. `highlightCCode.js`) or reads from a shared store isn't a candidate for this — leave it untested for now rather than reaching for `jsdom`/`happy-dom`, until one of those is actually added to the project. A component file itself (anything that calls `customElements.define(...)` at module load) can't be imported in Vitest's default `node` environment at all — it throws immediately, since there's no DOM. If a component contains pure logic worth testing (parsing, formatting, bitmask math, etc.), extract it into a plain sibling module with no CSS/DOM imports — e.g. `resizeOption.js` next to `DynamicPanel.js`, `hexUtils.js`/`generateTilesCode.js`/`generateMapCode.js` next to `CodePreview.js`, `encodeIndexedPng.js`/`generateSpritePng.js` (its `buildSpritePixelGrid`/`hexToRgb` helpers are exported specifically for this) next to `TilesetIO.js` — and have the component import from there. This is the same reason `src/state/` stores stay untested: they're inherently stateful singletons, not pure functions, so they're out of scope for this rule.
 
 ## Architecture
 
