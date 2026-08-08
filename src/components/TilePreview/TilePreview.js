@@ -7,9 +7,9 @@ const DEFAULT_SCALE = 4;
 // Renders a tile to a <canvas> (rather than a grid of elements) so pixels
 // sit adjacent with zero seams at any scale factor, including non-integer ones.
 //
-// Deliberately has no knowledge of tileStore — set the `pixels` attribute
+// Deliberately has no knowledge of frameStore — set the `pixels` attribute
 // (see pixelsAttribute.js) to the tile data to render; renders blank if
-// unset. Callers that read from tileStore (TileGallery, SpritePreview) own
+// unset. Callers that read from frameStore (TileGallery, FramePreview) own
 // encoding/updating that attribute themselves.
 class TilePreview extends HTMLElement {
   static get observedAttributes() {

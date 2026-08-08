@@ -1,7 +1,7 @@
 import styles from "./SpriteEditorGridCell.css?inline";
 import { paletteStore } from "../../state/paletteStore.js";
 import { pointerState } from "../../state/pointerState.js";
-import { tileStore } from "../../state/tileStore.js";
+import { frameStore } from "../../state/frameStore.js";
 
 class SpriteEditorGridCell extends HTMLElement {
   #index;
@@ -19,7 +19,7 @@ class SpriteEditorGridCell extends HTMLElement {
     this.#index = Number(this.getAttribute("index"));
 
     const paint = () => {
-      tileStore.setPixel(this.#index, paletteStore.selectedColorIndex);
+      frameStore.setPixel(this.#index, paletteStore.selectedColorIndex);
     };
 
     this.#cell.addEventListener("pointerdown", paint);
@@ -29,16 +29,16 @@ class SpriteEditorGridCell extends HTMLElement {
   }
 
   connectedCallback() {
-    tileStore.addEventListener("change", this.#render);
+    frameStore.addEventListener("change", this.#render);
     this.#render();
   }
 
   disconnectedCallback() {
-    tileStore.removeEventListener("change", this.#render);
+    frameStore.removeEventListener("change", this.#render);
   }
 
   #render = () => {
-    const tile = tileStore.tiles[tileStore.selectedTileIndex];
+    const tile = frameStore.selectedFrame.tiles[frameStore.selectedTileIndex];
     const colorIndex = tile ? tile.pixels[this.#index] : 0;
     this.#cell.className = `filled-${colorIndex}`;
   };

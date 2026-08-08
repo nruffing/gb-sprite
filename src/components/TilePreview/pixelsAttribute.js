@@ -1,8 +1,9 @@
 // Encodes/decodes an 8x8 tile's pixel color indices (each a palette slot,
 // 0-3) to/from the `pixels` attribute TilePreview reads — a flat,
 // comma-separated, row-major list, e.g. "0,0,1,2,3,...". Keeps TilePreview
-// itself decoupled from tileStore: callers (TileGallery, SpritePreview) read
-// tileStore.tiles[i].pixels and pass the encoded string down as an attribute.
+// itself decoupled from frameStore: callers (TileGallery, FramePreview) read
+// frameStore.selectedFrame.tiles[i].pixels and pass the encoded string down
+// as an attribute.
 export function encodePixels(pixels) {
   return pixels.join(",");
 }

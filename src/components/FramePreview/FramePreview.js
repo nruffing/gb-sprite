@@ -1,14 +1,14 @@
-import styles from "./SpritePreview.css?inline";
-import { tileStore, MAP_WIDTH } from "../../state/tileStore";
+import styles from "./FramePreview.css?inline";
+import { frameStore } from "../../state/frameStore.js";
 import { encodePixels } from "../TilePreview/pixelsAttribute.js";
 
-// Flipping the whole assembled sprite (not just each tile's own pixels) needs
+// Flipping the whole assembled frame (not just each tile's own pixels) needs
 // to also swap tiles across the grid — columns for flip-X, rows for flip-Y —
 // so the frame's silhouette mirrors correctly, not just each tile in place.
 // Each <tile-preview>'s grid slot (`data-position`) stays fixed; #render()
 // remaps which source tile's pixels get encoded into that slot's `pixels`
-// attribute (tile-preview itself has no knowledge of tileStore).
-class SpritePreview extends HTMLElement {
+// attribute (tile-preview itself has no knowledge of frameStore).
+class FramePreview extends HTMLElement {
   #flipX = false;
   #flipY = false;
   #tilePreviews;
@@ -16,11 +16,12 @@ class SpritePreview extends HTMLElement {
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
+    const { tiles, mapWidth } = frameStore.selectedFrame;
     shadow.innerHTML = /* html */ `
       <style>${styles}</style>
       <div class="container">
-        <div class="preview" style="--map-width: ${MAP_WIDTH}">
-        ${tileStore.tiles
+        <div class="preview" style="--map-width: ${mapWidth}">
+        ${tiles
           .map(
             (_tile, position) => /* html */ `
           <tile-preview scale="12" data-position="${position}"></tile-preview>
@@ -50,35 +51,36 @@ class SpritePreview extends HTMLElement {
   }
 
   connectedCallback() {
-    tileStore.addEventListener("change", this.#onTileStoreChange);
+    frameStore.addEventListener("change", this.#onFrameStoreChange);
     this.#render();
   }
 
   disconnectedCallback() {
-    tileStore.removeEventListener("change", this.#onTileStoreChange);
+    frameStore.removeEventListener("change", this.#onFrameStoreChange);
   }
 
-  #onTileStoreChange = () => {
+  #onFrameStoreChange = () => {
     this.#render();
   };
 
   #render() {
-    const numRows = tileStore.tiles.length / MAP_WIDTH;
+    const { tiles, mapWidth } = frameStore.selectedFrame;
+    const numRows = tiles.length / mapWidth;
     this.#tilePreviews.forEach((tilePreview) => {
       const position = Number(tilePreview.dataset.position);
-      const row = Math.floor(position / MAP_WIDTH);
-      const col = position % MAP_WIDTH;
+      const row = Math.floor(position / mapWidth);
+      const col = position % mapWidth;
       const sourceRow = this.#flipY ? numRows - 1 - row : row;
-      const sourceCol = this.#flipX ? MAP_WIDTH - 1 - col : col;
-      const sourceIndex = sourceRow * MAP_WIDTH + sourceCol;
+      const sourceCol = this.#flipX ? mapWidth - 1 - col : col;
+      const sourceIndex = sourceRow * mapWidth + sourceCol;
 
       tilePreview.setAttribute(
         "pixels",
-        encodePixels(tileStore.tiles[sourceIndex].pixels),
+        encodePixels(tiles[sourceIndex].pixels),
       );
       tilePreview.toggleAttribute("flip-x", this.#flipX);
       tilePreview.toggleAttribute("flip-y", this.#flipY);
     });
   }
 }
-customElements.define("sprite-preview", SpritePreview);
+customElements.define("frame-preview", FramePreview);

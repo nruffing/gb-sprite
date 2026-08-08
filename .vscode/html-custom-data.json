@@ -33,7 +33,7 @@
     },
     {
       "name": "code-preview",
-      "description": "Shows GBDK-2020 C source (tile bitmap data + the tileset map array) for all tiles in tileStore, with a copy-to-clipboard button, defined in src/components/CodePreview/CodePreview.js.",
+      "description": "Shows GBDK-2020 C source (tile bitmap data + the tileset map array) for all tiles in frameStore's selectedFrame, with a copy-to-clipboard button, defined in src/components/CodePreview/CodePreview.js.",
       "attributes": []
     },
     {
@@ -58,17 +58,22 @@
     },
     {
       "name": "tile-gallery",
-      "description": "Renders a tile-preview for every tile in tileStore, defined in src/components/TileGallery/TileGallery.js.",
+      "description": "Renders a tile-preview for every tile in frameStore's selectedFrame, defined in src/components/TileGallery/TileGallery.js.",
       "attributes": []
     },
     {
-      "name": "sprite-preview",
-      "description": "Renders a tile-preview for every tile in tileStore laid out as the assembled sprite, defined in src/components/SpritePreview/SpritePreview.js.",
+      "name": "frame-preview",
+      "description": "Renders a tile-preview for every tile in frameStore's selectedFrame laid out as the assembled frame, defined in src/components/FramePreview/FramePreview.js.",
+      "attributes": []
+    },
+    {
+      "name": "frame-gallery",
+      "description": "Gallery of frames from frameStore, defined in src/components/FrameGallery/FrameGallery.js. Currently a stub — not yet wired to frameStore's frame list.",
       "attributes": []
     },
     {
       "name": "tileset-io",
-      "description": "Export/import the current tileset as JSON (round-trips tileStore exactly), and one-way export it as an indexed PNG sprite sheet, defined in src/components/TilesetIO/TilesetIO.js.",
+      "description": "Export/import the current tileset as JSON (round-trips frameStore's selectedFrame exactly), and one-way export it as an indexed PNG sprite sheet, defined in src/components/TilesetIO/TilesetIO.js.",
       "attributes": []
     },
     {
@@ -87,7 +92,7 @@
     },
     {
       "name": "tile-preview",
-      "description": "Renders an 8x8 tile to a canvas at a given pixel scale with no seams between pixels, defined in src/components/TilePreview/TilePreview.js. Has no knowledge of tileStore — callers pass tile data via the `pixels` attribute; renders blank if unset.",
+      "description": "Renders an 8x8 tile to a canvas at a given pixel scale with no seams between pixels, defined in src/components/TilePreview/TilePreview.js. Has no knowledge of frameStore — callers pass tile data via the `pixels` attribute; renders blank if unset.",
       "attributes": [
         {
           "name": "scale",

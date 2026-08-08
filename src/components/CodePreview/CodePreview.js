@@ -1,5 +1,5 @@
 import styles from "./CodePreview.css?inline";
-import { tileStore, MAP_WIDTH } from "../../state/tileStore.js";
+import { frameStore } from "../../state/frameStore.js";
 import { generateTilesCode } from "./generateTilesCode.js";
 import { generateMapCode } from "./generateMapCode.js";
 import { highlightCCode } from "./highlightCCode.js";
@@ -43,25 +43,22 @@ class CodePreview extends HTMLElement {
   }
 
   connectedCallback() {
-    tileStore.addEventListener("change", this.#render);
+    frameStore.addEventListener("change", this.#render);
     this.#render();
   }
 
   disconnectedCallback() {
-    tileStore.removeEventListener("change", this.#render);
+    frameStore.removeEventListener("change", this.#render);
   }
 
   #render = () => {
+    const { tiles, mapWidth } = frameStore.selectedFrame;
     const tilesetName = this.#nameInput.value || "Tileset";
     const tilesCode = generateTilesCode(
       tilesetName,
-      tileStore.tiles.map((tile) => tile.pixels),
+      tiles.map((tile) => tile.pixels),
     );
-    const mapCode = generateMapCode(
-      tilesetName,
-      tileStore.tiles.length,
-      MAP_WIDTH,
-    );
+    const mapCode = generateMapCode(tilesetName, tiles.length, mapWidth);
     this.#currentCode = `${tilesCode}\n\n${mapCode}`;
     this.#codeElement.replaceChildren(highlightCCode(this.#currentCode));
   };

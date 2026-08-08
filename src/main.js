@@ -7,7 +7,7 @@ import "./components/CodePreview/CodePreview.js";
 import "./components/TabPanel/TabPanel.js";
 import "./components/TileGallery/TileGallery.js";
 import "./components/TilePreview/TilePreview.js";
-import "./components/SpritePreview/SpritePreview.js";
+import "./components/FramePreview/FramePreview.js";
 import "./components/TilesetIO/TilesetIO.js";
 import "./components/ToggleSwitch/ToggleSwitch.js";
 import "./components/DynamicPanel/DynamicPanel.js";

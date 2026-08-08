@@ -1,5 +1,5 @@
 import styles from "./TilesetIO.css?inline";
-import { tileStore, MAP_WIDTH } from "../../state/tileStore.js";
+import { frameStore } from "../../state/frameStore.js";
 import { PALETTE_SIZE } from "../../state/paletteStore.js";
 import { generateSpritePng } from "./generateSpritePng.js";
 
@@ -22,7 +22,7 @@ function downloadBlob(blob, filename) {
 }
 
 // Saves/loads the current tileset as JSON, round-tripping the exact shape
-// tileStore.toJSON()/loadTiles() use, or exports it as a PNG. Neither the
+// frameStore.toJSON()/loadTiles() use, or exports it as a PNG. Neither the
 // PNG nor the GBDK C source CodePreview generates round-trip back in — both
 // are one-way exports for use elsewhere.
 class TilesetIO extends HTMLElement {
@@ -59,7 +59,7 @@ class TilesetIO extends HTMLElement {
   }
 
   #exportTileset() {
-    const payload = tileStore.toJSON();
+    const payload = frameStore.toJSON();
     const blob = new Blob([JSON.stringify(payload, null, 2)], {
       type: "application/json",
     });
@@ -67,12 +67,9 @@ class TilesetIO extends HTMLElement {
   }
 
   #exportPng() {
-    const payload = tileStore.toJSON();
-    const pngBytes = generateSpritePng(
-      tileStore.tiles,
-      MAP_WIDTH,
-      PALETTE_SIZE,
-    );
+    const payload = frameStore.toJSON();
+    const { tiles, mapWidth } = frameStore.selectedFrame;
+    const pngBytes = generateSpritePng(tiles, mapWidth, PALETTE_SIZE);
     const blob = new Blob([pngBytes], { type: "image/png" });
     downloadBlob(blob, buildExportFilename(payload.version, "png"));
   }
@@ -90,7 +87,7 @@ class TilesetIO extends HTMLElement {
       return;
     }
 
-    if (tileStore.loadTiles(data)) {
+    if (frameStore.loadTiles(data)) {
       this.#setStatus(`Loaded ${file.name}.`);
     } else {
       this.#setStatus(`"${file.name}" isn't a valid tileset file.`);

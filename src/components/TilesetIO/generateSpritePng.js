@@ -3,7 +3,7 @@ import { encodeIndexedPng } from "./encodeIndexedPng.js";
 const TILE_SIZE = 8;
 
 // Lays every tile out into a single frame, tiles.length / mapWidth rows of
-// mapWidth tiles each — the same arrangement SpritePreview renders and
+// mapWidth tiles each — the same arrangement FramePreview renders and
 // generateMapCode encodes, matching the GBDK-2020 tooling convention of one
 // PNG frame per sprite (see -sw/-sh in png2asset).
 export function buildSpritePixelGrid(tiles, mapWidth) {
