@@ -90,6 +90,16 @@
 
   --divider-border: 1px solid var(--gbs-color-default-500);
   --divider-padding: var(--gbs-spacer-300);
+
+  --toggle-width: 36px;
+  --toggle-height: 20px;
+  --toggle-thumb-size: 16px;
+  --toggle-track-padding: 2px;
+  --toggle-track-color-off: var(--gbs-color-default-600);
+  --toggle-track-color-on: var(--gbs-color-highlight);
+  --toggle-thumb-color: var(--gbs-color-default-0);
+  --toggle-transition-duration: 150ms;
+  --toggle-focus-outline: 2px solid var(--gbs-color-highlight);
 }
 
 body {

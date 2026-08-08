@@ -9,6 +9,7 @@ import "./components/TileGallery/TileGallery.js";
 import "./components/TilePreview/TilePreview.js";
 import "./components/SpritePreview/SpritePreview.js";
 import "./components/TilesetIO/TilesetIO.js";
+import "./components/ToggleSwitch/ToggleSwitch.js";
 
 const isTextInput = (target) =>
   target instanceof HTMLElement &&

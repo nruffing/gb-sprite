@@ -72,6 +72,20 @@
       "attributes": []
     },
     {
+      "name": "toggle-switch",
+      "description": "Boolean on/off switch built on a native <button role=\"switch\">, defined in src/components/ToggleSwitch/ToggleSwitch.js. Dispatches a bubbling \"change\" event (detail: { checked }) when toggled.",
+      "attributes": [
+        {
+          "name": "checked",
+          "description": "Present when the switch is on. Reflects the `checked` property; toggle via JS or by adding/removing this attribute."
+        },
+        {
+          "name": "label",
+          "description": "Optional text rendered next to the switch inside the shadow DOM, wrapped in a native <label> so clicking the text also toggles the switch. Read once when the element connects, not observed for changes."
+        }
+      ]
+    },
+    {
       "name": "tile-preview",
       "description": "Renders an 8x8 tile to a canvas at a given pixel scale with no seams between pixels, defined in src/components/TilePreview/TilePreview.js. Set `tile-index` to show that tile from tileStore; renders blank if unset.",
       "attributes": [

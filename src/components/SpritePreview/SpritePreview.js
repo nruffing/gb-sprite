@@ -8,7 +8,8 @@ class SpritePreview extends HTMLElement {
     super();
     const shadow = this.attachShadow({ mode: "open" });
     shadow.innerHTML = /* html */ `
-        <style>${styles}</style>
+      <style>${styles}</style>
+      <div class="container">
         <div class="preview" style="--map-width: ${MAP_WIDTH}">
         ${this.#tiles
           .map(
@@ -18,6 +19,11 @@ class SpritePreview extends HTMLElement {
           )
           .join("")}
         </div>
+        <div class="switches">
+          <toggle-switch label="Flip-X"></toggle-switch>
+          <toggle-switch label="Flip-Y"></toggle-switch>
+        </div>
+      </div>
       `;
   }
 }
