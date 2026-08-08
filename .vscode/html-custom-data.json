@@ -113,7 +113,7 @@
       "attributes": [
         {
           "name": "resize",
-          "description": "Which edge(s) get a drag handle, written as ResizeOption key names joined by \"|\" (e.g. \"LEFT | TOP\"), parsed into a bitmask by parseResizeOption() in src/components/DynamicPanel/resizeOption.js. All four edges (LEFT/TOP/RIGHT/BOTTOM) parse, but DynamicPanel doesn't render or wire up any drag handles yet."
+          "description": "Which edge(s) get a drag handle, written as ResizeOption key names joined by \"|\" (e.g. \"LEFT | TOP\"), parsed into a bitmask by parseResizeOption() in src/components/DynamicPanel/resizeOption.js. All four edges (LEFT/TOP/RIGHT/BOTTOM) render a draggable handle that resizes the panel's width (LEFT/RIGHT) or height (TOP/BOTTOM) via pointer events, clamped between 150px and 800px."
         }
       ]
     }

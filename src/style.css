@@ -91,6 +91,9 @@
   --divider-border: 1px solid var(--gbs-color-default-500);
   --divider-padding: var(--gbs-spacer-300);
 
+  --resize-handle-width: 4px;
+  --resize-handle-color-hover: var(--gbs-color-highlight-overlay);
+
   --toggle-width: 36px;
   --toggle-height: 20px;
   --toggle-thumb-size: 16px;

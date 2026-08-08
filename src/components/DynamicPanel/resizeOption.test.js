@@ -1,9 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import {
-  getUnsupportedResizeOptions,
-  parseResizeOption,
-  ResizeOption,
-} from "./resizeOption.js";
+import { parseResizeOption, ResizeOption } from "./resizeOption.js";
 
 describe("ResizeOption", () => {
   it("assigns each edge a distinct bit", () => {
@@ -86,35 +82,5 @@ describe("parseResizeOption", () => {
     );
 
     warn.mockRestore();
-  });
-});
-
-describe("getUnsupportedResizeOptions", () => {
-  it("returns 0 for LEFT alone (the only supported edge)", () => {
-    expect(getUnsupportedResizeOptions(ResizeOption.LEFT)).toBe(0);
-  });
-
-  it("returns 0 for no flags set", () => {
-    expect(getUnsupportedResizeOptions(0)).toBe(0);
-  });
-
-  it.each([
-    ["TOP", ResizeOption.TOP],
-    ["RIGHT", ResizeOption.RIGHT],
-    ["BOTTOM", ResizeOption.BOTTOM],
-  ])("flags %s as unsupported on its own", (_name, flag) => {
-    expect(getUnsupportedResizeOptions(flag)).toBe(flag);
-  });
-
-  it("flags only the unsupported bits when combined with LEFT", () => {
-    expect(
-      getUnsupportedResizeOptions(ResizeOption.LEFT | ResizeOption.TOP),
-    ).toBe(ResizeOption.TOP);
-  });
-
-  it("flags all unsupported bits when multiple unsupported edges are combined", () => {
-    expect(
-      getUnsupportedResizeOptions(ResizeOption.TOP | ResizeOption.BOTTOM),
-    ).toBe(ResizeOption.TOP | ResizeOption.BOTTOM);
   });
 });

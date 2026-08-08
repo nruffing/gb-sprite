@@ -1,8 +1,83 @@
 .panel {
   display: grid;
   border: none;
+  height: 100%;
+  position: relative;
 }
 
 .panel.resize-left {
   border-left: var(--divider-border);
+}
+
+.panel.resize-top {
+  border-top: var(--divider-border);
+}
+
+.panel.resize-right {
+  border-right: var(--divider-border);
+}
+
+.panel.resize-bottom {
+  border-bottom: var(--divider-border);
+}
+
+.resize-handle {
+  display: none;
+  position: absolute;
+}
+
+.resize-handle-left,
+.resize-handle-right {
+  top: 0;
+  bottom: 0;
+  width: var(--resize-handle-width);
+  cursor: ew-resize;
+}
+
+.resize-handle-top,
+.resize-handle-bottom {
+  left: 0;
+  right: 0;
+  height: var(--resize-handle-width);
+  cursor: ns-resize;
+}
+
+.panel.resize-left .resize-handle-left {
+  display: block;
+  left: calc(var(--resize-handle-width) / -2);
+}
+
+.panel.resize-top .resize-handle-top {
+  display: block;
+  top: calc(var(--resize-handle-width) / -2);
+}
+
+.panel.resize-right .resize-handle-right {
+  display: block;
+  right: calc(var(--resize-handle-width) / -2);
+}
+
+.panel.resize-bottom .resize-handle-bottom {
+  display: block;
+  bottom: calc(var(--resize-handle-width) / -2);
+}
+
+.panel.resize-left:has(.resize-handle-left:hover),
+.panel.resize-left:has(.resize-handle-left.dragging) {
+  border-left-color: var(--resize-handle-color-hover);
+}
+
+.panel.resize-top:has(.resize-handle-top:hover),
+.panel.resize-top:has(.resize-handle-top.dragging) {
+  border-top-color: var(--resize-handle-color-hover);
+}
+
+.panel.resize-right:has(.resize-handle-right:hover),
+.panel.resize-right:has(.resize-handle-right.dragging) {
+  border-right-color: var(--resize-handle-color-hover);
+}
+
+.panel.resize-bottom:has(.resize-handle-bottom:hover),
+.panel.resize-bottom:has(.resize-handle-bottom.dragging) {
+  border-bottom-color: var(--resize-handle-color-hover);
 }

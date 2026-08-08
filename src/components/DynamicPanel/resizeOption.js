@@ -1,7 +1,5 @@
-// Which edge(s) of the panel a drag handle can attach to. Bit flags so
-// multiple edges can be combined, e.g. `ResizeOption.LEFT | ResizeOption.TOP`.
-// DynamicPanel only wires up handle rendering for LEFT so far — the other
-// edges exist here so parsing/combining is already correct once that lands.
+// Which edge(s) of the panel get a drag handle. Bit flags so multiple edges
+// can be combined, e.g. `ResizeOption.LEFT | ResizeOption.TOP`.
 export const ResizeOption = Object.freeze({
   LEFT: 1 << 0,
   TOP: 1 << 1,
@@ -23,14 +21,4 @@ export function parseResizeOption(value) {
     }
     return flags | flag;
   }, 0);
-}
-
-// Edges DynamicPanel actually renders/wires a drag handle for today. Update
-// this as more ResizeOption edges get implemented.
-const SUPPORTED_RESIZE_OPTIONS = ResizeOption.LEFT;
-
-// Returns the subset of a ResizeOption bitmask that DynamicPanel doesn't
-// implement yet (0 if every requested edge is supported).
-export function getUnsupportedResizeOptions(flags) {
-  return flags & ~SUPPORTED_RESIZE_OPTIONS;
 }
