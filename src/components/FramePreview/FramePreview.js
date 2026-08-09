@@ -9,6 +9,10 @@ import { encodePixels } from "../TilePreview/pixelsAttribute.js";
 // remaps which source tile's pixels get encoded into that slot's `pixels`
 // attribute (tile-preview itself has no knowledge of frameStore).
 class FramePreview extends HTMLElement {
+  static get observedAttributes() {
+    return ["frame-index"];
+  }
+
   #flipX = false;
   #flipY = false;
   #tilePreviews;
@@ -16,7 +20,7 @@ class FramePreview extends HTMLElement {
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
-    const { tiles, mapWidth } = frameStore.selectedFrame;
+    const { tiles, mapWidth } = this.#resolveFrame();
     shadow.innerHTML = /* html */ `
       <style>${styles}</style>
       <div class="container">
@@ -59,12 +63,30 @@ class FramePreview extends HTMLElement {
     frameStore.removeEventListener("change", this.#onFrameStoreChange);
   }
 
+  attributeChangedCallback() {
+    this.#render();
+  }
+
   #onFrameStoreChange = () => {
     this.#render();
   };
 
+  // Which frame to render: the `frame-index` attribute if set, otherwise
+  // frameStore's currently selected frame. Lets a bare <frame-preview> keep
+  // tracking whatever's being edited, while an explicit frame-index lets a
+  // caller (e.g. a future frame gallery listing every frame) pin an instance
+  // to one specific frame regardless of selection.
+  #resolveFrame() {
+    const frameIndexAttr = this.getAttribute("frame-index");
+    const frameIndex =
+      frameIndexAttr === null
+        ? frameStore.selectedFrameIndex
+        : Number(frameIndexAttr);
+    return frameStore.frames[frameIndex] ?? frameStore.selectedFrame;
+  }
+
   #render() {
-    const { tiles, mapWidth } = frameStore.selectedFrame;
+    const { tiles, mapWidth } = this.#resolveFrame();
     const numRows = tiles.length / mapWidth;
     this.#tilePreviews.forEach((tilePreview) => {
       const position = Number(tilePreview.dataset.position);

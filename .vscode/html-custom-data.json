@@ -63,8 +63,13 @@
     },
     {
       "name": "frame-preview",
-      "description": "Renders a tile-preview for every tile in frameStore's selectedFrame laid out as the assembled frame, defined in src/components/FramePreview/FramePreview.js.",
-      "attributes": []
+      "description": "Renders a tile-preview for every tile in a frame laid out as the assembled frame, defined in src/components/FramePreview/FramePreview.js.",
+      "attributes": [
+        {
+          "name": "frame-index",
+          "description": "Index into frameStore.frames to render. Falls back to frameStore.selectedFrameIndex if unset, so a bare <frame-preview> tracks whatever frame is currently being edited."
+        }
+      ]
     },
     {
       "name": "frame-gallery",

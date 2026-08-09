@@ -8,7 +8,6 @@ class FrameGallery extends HTMLElement {
     shadow.innerHTML = /* html */ `
         <style>${styles}</style>
         <div class="gallery">
-        
         </div>
       `;
   }
