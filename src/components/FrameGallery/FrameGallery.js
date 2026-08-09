@@ -1,5 +1,9 @@
 import styles from "./FrameGallery.css?inline";
-import { frameStore } from "../../state/frameStore.js";
+import {
+  frameStore,
+  INITIAL_TILE_COUNT,
+  MAP_WIDTH,
+} from "../../state/frameStore.js";
 import "../SvgIcon/SvgIcon.js";
 
 // Renders a <frame-preview> per frame in frameStore, letting each one pin
@@ -22,7 +26,7 @@ class FrameGallery extends HTMLElement {
           <svg-icon name="add"></svg-icon>
         </button>
         <h2>Frames</h2>
-        <div class="gallery"></div>
+        <div class="gallery" style="--map-width: ${MAP_WIDTH}; --frame-rows: ${INITIAL_TILE_COUNT / MAP_WIDTH}"></div>
       </div>
     `;
 
@@ -54,6 +58,12 @@ class FrameGallery extends HTMLElement {
       })
       .join("");
 
+    // Scrolls along with the frames above it (it's just the last item in
+    // .gallery), rather than being pinned like the corner add-frame button.
+    // Sized in FrameGallery.css via the same calc() the grid columns use —
+    // no DOM measurement needed, since a frame's rendered size is fully
+    // knowable ahead of time from --map-width/--frame-rows (set once above)
+    // and the --tile-pixel-size/--frame-preview-tile-scale tokens in style.css.
     this.#galleryElement.innerHTML = /* html */ `
       ${frameItems}
       <div class="frame-placeholder">
@@ -64,48 +74,14 @@ class FrameGallery extends HTMLElement {
       </div>
     `;
 
-    const frameEls = this.#galleryElement.querySelectorAll(".frame");
-    frameEls.forEach((frameEl) => {
+    this.#galleryElement.querySelectorAll(".frame").forEach((frameEl) => {
       frameEl.addEventListener("click", () => {
         frameStore.setSelectedFrameIndex(Number(frameEl.dataset.index));
       });
     });
 
-    const placeholder =
-      this.#galleryElement.querySelector(".frame-placeholder");
-    // Matches whatever size a frame actually renders at (driven by
-    // FramePreview's tile scale/mapWidth) rather than duplicating that math
-    // here — offsetWidth/offsetHeight are border-box measurements, hence
-    // .frame-placeholder being box-sizing: border-box too, so they line up
-    // exactly.
-    if (frameEls.length > 0) {
-      // Measure the <frame-preview> itself, not the .frame wrapper around
-      // it — .frame is the grid item, and grid items stretch to fill their
-      // track by default, so its offsetWidth would reflect however wide the
-      // grid *already* decided the column was, not the frame's true
-      // intrinsic size. (That circularity is exactly what broke this the
-      // first time: with no --frame-width set yet, the very first column
-      // fell back to 100%-wide, so the "measured" width came back inflated
-      // and got baked into --frame-width for every render after.)
-      // frame-preview isn't a grid item — it's a normal, unstretched flex
-      // child of .frame — so its own box always reflects its real size.
-      const framePreview = frameEls[0].querySelector("frame-preview");
-      const frameWidth = framePreview.offsetWidth;
-      const frameHeight = framePreview.offsetHeight;
-      placeholder.style.width = `${frameWidth}px`;
-      placeholder.style.height = `${frameHeight}px`;
-      // grid-template-columns: repeat(auto-fill, max-content) can't compute
-      // a repeat count from a purely intrinsic size — with nothing fixed to
-      // divide the container width by, browsers just fall back to a single
-      // column. Feeding the measured frame width in as a minmax() floor
-      // gives auto-fill a definite size to work with.
-      this.#galleryElement.style.setProperty(
-        "--frame-width",
-        `${frameWidth}px`,
-      );
-    }
-    placeholder
-      .querySelector("button")
+    this.#galleryElement
+      .querySelector(".frame-placeholder button")
       .addEventListener("click", () => frameStore.addFrame());
   };
 }

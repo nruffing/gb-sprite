@@ -16,7 +16,7 @@ class TileGallery extends HTMLElement {
           .map(
             (tile, index) => /* html */ `
           <div class="tile" data-index="${index}">
-            <tile-preview scale="10" pixels="${encodePixels(tile.pixels)}"></tile-preview>
+            <tile-preview pixels="${encodePixels(tile.pixels)}"></tile-preview>
             <div class="overlay"></div>
           </div>
           `,

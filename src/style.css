@@ -113,6 +113,21 @@
 
   --panel-default-width: 300px;
 
+  /* One Game Boy tile is an 8x8 real-pixel grid (see TILE_SIDE in
+     TilePreview.js); --tile-preview-scale is how many CSS px each of those
+     real pixels renders at (TilePreview's own DEFAULT_SCALE, read as a CSS
+     custom property rather than an attribute so a tile's rendered size can
+     be computed anywhere with calc(), not just measured after layout).
+     TileGallery/FramePreview override it locally to their own scale. */
+  --tile-pixel-size: 8px;
+  --tile-preview-scale: 4;
+
+  /* Single source of truth for the fixed scale FramePreview renders its
+     tiles at — used both to set FramePreview's local --tile-preview-scale
+     override and, in FrameGallery.css, to calc() a frame's total rendered
+     width/height without measuring the DOM. */
+  --frame-preview-tile-scale: 12;
+
   --scrollbar-width: thin;
   --scrollbar-thumb-color: var(--gbs-color-default-600);
   --scrollbar-track-color: transparent;

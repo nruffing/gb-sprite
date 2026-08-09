@@ -1,3 +1,10 @@
+:host {
+  /* FramePreview always renders its tiles at this fixed scale — sourced
+     from the single --frame-preview-tile-scale token in style.css so
+     FrameGallery.css's calc()s stay in sync with what actually renders here. */
+  --tile-preview-scale: var(--frame-preview-tile-scale);
+}
+
 .container {
   display: inline-flex;
   flex-direction: column;

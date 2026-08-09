@@ -101,12 +101,8 @@
     },
     {
       "name": "tile-preview",
-      "description": "Renders an 8x8 tile to a canvas at a given pixel scale with no seams between pixels, defined in src/components/TilePreview/TilePreview.js. Has no knowledge of frameStore — callers pass tile data via the `pixels` attribute; renders blank if unset.",
+      "description": "Renders an 8x8 tile to a canvas at a given pixel scale with no seams between pixels, defined in src/components/TilePreview/TilePreview.js. Has no knowledge of frameStore — callers pass tile data via the `pixels` attribute; renders blank if unset. Rendered scale is read from the --tile-preview-scale CSS custom property (style.css; default 4), not an attribute — set it via :host in a component's own CSS to override it (see TileGallery.css/FramePreview.css).",
       "attributes": [
-        {
-          "name": "scale",
-          "description": "CSS pixels per tile pixel (default 4)."
-        },
         {
           "name": "pixels",
           "description": "Comma-separated, row-major list of the tile's 64 palette color indices (0-3), e.g. \"0,0,1,2,...\". Encode/decode via encodePixels()/decodePixels() in src/components/TilePreview/pixelsAttribute.js."

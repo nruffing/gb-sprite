@@ -2,6 +2,8 @@ import styles from "./TilePreview.css?inline";
 import { decodePixels } from "./pixelsAttribute.js";
 
 const TILE_SIDE = 8;
+// Matches the --tile-preview-scale default in style.css — only used if that
+// custom property somehow resolves empty.
 const DEFAULT_SCALE = 4;
 
 // Renders a tile to a <canvas> (rather than a grid of elements) so pixels
@@ -11,9 +13,16 @@ const DEFAULT_SCALE = 4;
 // (see pixelsAttribute.js) to the tile data to render; renders blank if
 // unset. Callers that read from frameStore (TileGallery, FramePreview) own
 // encoding/updating that attribute themselves.
+//
+// Rendered size comes from the --tile-preview-scale CSS custom property
+// (style.css), not an HTML attribute — TileGallery/FramePreview override it
+// locally to their own scale (:host { --tile-preview-scale: N }). Reading it
+// as CSS rather than an attribute lets ancestors calc() a tile's rendered
+// size themselves (see FrameGallery.css) instead of having to measure it
+// from the DOM after render.
 class TilePreview extends HTMLElement {
   static get observedAttributes() {
-    return ["scale", "pixels", "flip-x", "flip-y"];
+    return ["pixels", "flip-x", "flip-y"];
   }
 
   #canvas;
@@ -37,7 +46,10 @@ class TilePreview extends HTMLElement {
   }
 
   #render() {
-    const scale = Number(this.getAttribute("scale")) || DEFAULT_SCALE;
+    const computedStyle = getComputedStyle(this);
+    const scale =
+      Number(computedStyle.getPropertyValue("--tile-preview-scale")) ||
+      DEFAULT_SCALE;
     this.#canvas.width = TILE_SIDE;
     this.#canvas.height = TILE_SIDE;
     this.#canvas.style.width = `${TILE_SIDE * scale}px`;
@@ -49,7 +61,6 @@ class TilePreview extends HTMLElement {
     const pixels = decodePixels(this.getAttribute("pixels"));
     if (!pixels) return;
 
-    const computedStyle = getComputedStyle(this);
     const flipX = this.hasAttribute("flip-x");
     const flipY = this.hasAttribute("flip-y");
 

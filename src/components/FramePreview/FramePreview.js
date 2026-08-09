@@ -31,7 +31,7 @@ class FramePreview extends HTMLElement {
         ${tiles
           .map(
             (_tile, position) => /* html */ `
-          <tile-preview scale="12" data-position="${position}"></tile-preview>
+          <tile-preview data-position="${position}"></tile-preview>
           `,
           )
           .join("")}

@@ -1,5 +1,8 @@
 :host {
   display: block;
+  /* Overrides the default in style.css — this gallery's tile-previews
+     render bigger than the base scale. */
+  --tile-preview-scale: 10;
 }
 
 .gallery {
