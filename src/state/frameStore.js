@@ -1,10 +1,14 @@
-import { PALETTE_SIZE } from "./paletteStore.js";
+import {
+  PIXEL_COUNT,
+  applyTilesToFrame,
+  isValidTilesArray,
+} from "./frameSchema.js";
 
-export const PIXEL_COUNT = 64; // 8x8 sprite tile
+export { PIXEL_COUNT };
 export const MAP_WIDTH = 2; // tiles per row when a frame is laid out as a sprite/map
 export const INITIAL_TILE_COUNT = 4;
 
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 
 export class Tile {
   #pixels = new Array(PIXEL_COUNT).fill(0);
@@ -38,7 +42,7 @@ export class Frame {
   }
 }
 
-class FrameStore extends EventTarget {
+export class FrameStore extends EventTarget {
   // Starts with a single frame, matching what used to be tileStore's fixed
   // sprite (INITIAL_TILE_COUNT tiles) — nothing populates additional frames
   // yet, but every tile-editing operation below is already scoped through
@@ -115,59 +119,69 @@ class FrameStore extends EventTarget {
     this.#dispatchChange();
   }
 
-  // Called by JSON.stringify(frameStore) for save/export — exports the
-  // selected frame's tiles.
+  // Called by JSON.stringify(frameStore) for save/export — exports every
+  // frame (schema v2) as a 3D array: frames[frameIndex][tileIndex] is a
+  // tile's PIXEL_COUNT-length pixel array.
   toJSON() {
-    const frame = this.selectedFrame;
     return {
       version: SCHEMA_VERSION,
       pixelCount: PIXEL_COUNT,
-      mapWidth: frame.mapWidth,
-      tiles: frame.tiles.map((tile) => tile.pixels),
+      mapWidth: MAP_WIDTH,
+      frames: this.#frames.map((frame) =>
+        frame.tiles.map((tile) => tile.pixels),
+      ),
     };
   }
 
+  // Validates parsed save/import data against whichever schema version it
+  // claims to be. v1 (a single frame's tiles, matching the selected frame's
+  // current tile count) and v2 (every frame, as a 3D array) are both
+  // accepted so old exports still import.
   isValidTilesData(data) {
-    // Tile count is fixed for now — TileGallery/FramePreview build their
-    // markup once from the initial tile count and don't rebuild it on change.
-    const { version, pixelCount, tiles } = data ?? {};
-    if (version !== SCHEMA_VERSION) return false;
+    const { version, pixelCount } = data ?? {};
+    if (pixelCount !== PIXEL_COUNT) return false;
 
-    return (
-      pixelCount === PIXEL_COUNT &&
-      Array.isArray(tiles) &&
-      tiles.length === this.selectedFrame.tiles.length &&
-      tiles.every(
-        (pixels) =>
-          Array.isArray(pixels) &&
-          pixels.length === PIXEL_COUNT &&
-          pixels.every(
-            (colorIndex) =>
-              Number.isInteger(colorIndex) &&
-              colorIndex >= 0 &&
-              colorIndex < PALETTE_SIZE,
-          ),
-      )
-    );
+    if (version === 1) {
+      return isValidTilesArray(data.tiles, this.selectedFrame.tiles.length);
+    }
+
+    if (version === 2) {
+      return (
+        Array.isArray(data.frames) &&
+        data.frames.length > 0 &&
+        data.frames.every((tiles) => isValidTilesArray(tiles))
+      );
+    }
+
+    return false;
   }
 
-  // Replaces the selected frame's tiles from parsed save/import data (the
-  // shape toJSON produces). Returns whether the load succeeded. Mutates the
-  // existing Tile instances in place rather than replacing the tiles array,
-  // so anything holding a reference to selectedFrame.tiles sees the update
-  // rather than going stale.
+  // Loads parsed save/import data (the shape toJSON produces, v1 or v2).
+  // Returns whether the load succeeded.
+  //
+  // v1 data only ever described one frame, so it's applied to the currently
+  // selected frame's existing Tile instances in place (not replaced) —
+  // anything holding a reference to selectedFrame.tiles sees the update
+  // rather than going stale. v2 data describes every frame, so frame count
+  // itself may need to change — the whole frames array is replaced with
+  // freshly built Frames instead.
   loadTiles(data) {
     if (!this.isValidTilesData(data)) {
       console.warn("[gb-sprite] tried to load invalid tileset data", data);
       return false;
     }
 
-    const frame = this.selectedFrame;
-    data.tiles.forEach((pixels, tileIndex) => {
-      pixels.forEach((colorIndex, pixelIndex) =>
-        frame.tiles[tileIndex].setPixel(pixelIndex, colorIndex),
-      );
-    });
+    if (data.version === 1) {
+      applyTilesToFrame(this.selectedFrame, data.tiles);
+    } else {
+      this.#frames = data.frames.map((tiles) => {
+        const frame = new Frame(tiles.length, data.mapWidth ?? MAP_WIDTH);
+        applyTilesToFrame(frame, tiles);
+        return frame;
+      });
+      this.#selectedFrameIndex = 0;
+    }
+
     this.#selectedTileIndex = 0;
     this.#dispatchChange();
     return true;

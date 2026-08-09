@@ -1,5 +1,6 @@
 import "./style.css";
 import { paletteStore, PALETTE_SIZE } from "./state/paletteStore.js";
+import { pointerState } from "./state/pointerState.js";
 
 import "./components/SpriteEditorGrid/SpriteEditorGrid.js";
 import "./components/PaletteLegend/PaletteLegend.js";
@@ -12,6 +13,8 @@ import "./components/TilesetIO/TilesetIO.js";
 import "./components/ToggleSwitch/ToggleSwitch.js";
 import "./components/DynamicPanel/DynamicPanel.js";
 import "./components/FrameGallery/FrameGallery.js";
+
+pointerState.attach();
 
 const isTextInput = (target) =>
   target instanceof HTMLElement &&

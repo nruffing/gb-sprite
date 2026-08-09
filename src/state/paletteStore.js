@@ -1,6 +1,6 @@
 export const PALETTE_SIZE = 4;
 
-class PaletteStore extends EventTarget {
+export class PaletteStore extends EventTarget {
   #selectedColorIndex;
 
   constructor(initialIndex) {
