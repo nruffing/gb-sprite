@@ -51,12 +51,22 @@ export function buildFramesPixelGrid(framesTiles, mapWidth) {
   return { width, height, pixels };
 }
 
+// Accepts both 6-digit (#rrggbb) and CSS's 3-digit shorthand (#rgb, each
+// digit doubled) hex forms — production CSS minification shortens
+// declarations like #ffffff to #fff, and getComputedStyle() reads back
+// whatever's actually in the (possibly minified) stylesheet.
 export function hexToRgb(hex) {
-  const match = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  const match = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex.trim());
   if (!match) {
     throw new Error(`[gb-sprite] couldn't parse palette color "${hex}"`);
   }
-  const value = match[1];
+  const value =
+    match[1].length === 3
+      ? match[1]
+          .split("")
+          .map((digit) => digit + digit)
+          .join("")
+      : match[1];
   return [
     parseInt(value.slice(0, 2), 16),
     parseInt(value.slice(2, 4), 16),

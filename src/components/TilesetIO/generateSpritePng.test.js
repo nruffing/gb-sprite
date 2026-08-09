@@ -134,10 +134,16 @@ describe("hexToRgb", () => {
     expect(hexToRgb("  #000000  ")).toEqual([0, 0, 0]);
   });
 
+  it("parses CSS's 3-digit shorthand, doubling each digit", () => {
+    expect(hexToRgb("#f80")).toEqual([255, 136, 0]);
+    expect(hexToRgb("f80")).toEqual([255, 136, 0]);
+    expect(hexToRgb("#fff")).toEqual([255, 255, 255]);
+  });
+
   it("throws a descriptive error for an unparseable value", () => {
     expect(() => hexToRgb("not-a-color")).toThrow(
       /couldn't parse palette color/,
     );
-    expect(() => hexToRgb("#fff")).toThrow(/couldn't parse palette color/);
+    expect(() => hexToRgb("#ff88")).toThrow(/couldn't parse palette color/);
   });
 });
