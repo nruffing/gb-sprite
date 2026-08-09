@@ -28,9 +28,24 @@ class DynamicPanel extends HTMLElement {
   #handles = new Map();
   // Set for the duration of a drag; null otherwise.
   #activeDrag = null;
+  // Per-axis drag clamp bounds — read once from min-width-px/max-width-px/
+  // min-height-px/max-height-px, not observed, since they aren't expected
+  // to change after the element is created.
+  #bounds;
 
   constructor() {
     super();
+    this.#bounds = {
+      width: {
+        min: Number(this.getAttribute("min-width-px")) || MIN_PANEL_SIZE,
+        max: Number(this.getAttribute("max-width-px")) || MAX_PANEL_SIZE,
+      },
+      height: {
+        min: Number(this.getAttribute("min-height-px")) || MIN_PANEL_SIZE,
+        max: Number(this.getAttribute("max-height-px")) || MAX_PANEL_SIZE,
+      },
+    };
+
     const shadow = this.attachShadow({ mode: "open" });
     shadow.innerHTML = /* html */ `
       <style>${styles}</style>
@@ -121,10 +136,8 @@ class DynamicPanel extends HTMLElement {
     const { edgeConfig, startPos, startSize } = this.#activeDrag;
     const pos = edgeConfig.axis === "width" ? event.clientX : event.clientY;
     const delta = (pos - startPos) * edgeConfig.sign;
-    const size = Math.min(
-      MAX_PANEL_SIZE,
-      Math.max(MIN_PANEL_SIZE, startSize + delta),
-    );
+    const { min, max } = this.#bounds[edgeConfig.axis];
+    const size = Math.min(max, Math.max(min, startSize + delta));
     this.style[edgeConfig.axis] = `${size}px`;
   };
 

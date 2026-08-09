@@ -6,13 +6,16 @@
 }
 
 /* <slot> itself generates no box (UA default display: contents), so the
-   slotted element is the actual grid item here. Its default min-height is
-   auto, which would let its content grow the row (and this panel) instead
-   of letting the slotted content scroll internally — override it and give
-   it a definite height to work with. */
+   slotted element is the actual grid item here. Its default min-height/
+   min-width is auto, which would let its content grow the row/column (and
+   this panel, and #app's max-content column for it) instead of letting the
+   slotted content scroll internally — override both and give it a definite
+   size to work with. */
 .panel ::slotted(*) {
   min-height: 0;
   height: 100%;
+  min-width: 0;
+  width: 100%;
 }
 
 .panel.resize-left {

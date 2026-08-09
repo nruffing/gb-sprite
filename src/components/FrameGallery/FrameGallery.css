@@ -34,7 +34,8 @@ h2 {
 
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  min-width: 0;
+  overflow: auto;
   scrollbar-gutter: stable;
   display: grid;
   /* No media query needed — auto-fill fits as many --frame-width columns

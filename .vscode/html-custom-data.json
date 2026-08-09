@@ -123,7 +123,23 @@
       "attributes": [
         {
           "name": "resize",
-          "description": "Which edge(s) get a drag handle, written as ResizeOption key names joined by \"|\" (e.g. \"LEFT | TOP\"), parsed into a bitmask by parseResizeOption() in src/components/DynamicPanel/resizeOption.js. All four edges (LEFT/TOP/RIGHT/BOTTOM) render a draggable handle that resizes the panel's width (LEFT/RIGHT) or height (TOP/BOTTOM) via pointer events, clamped between 150px and 800px."
+          "description": "Which edge(s) get a drag handle, written as ResizeOption key names joined by \"|\" (e.g. \"LEFT | TOP\"), parsed into a bitmask by parseResizeOption() in src/components/DynamicPanel/resizeOption.js. All four edges (LEFT/TOP/RIGHT/BOTTOM) render a draggable handle that resizes the panel's width (LEFT/RIGHT, clamped between min-width-px/max-width-px) or height (TOP/BOTTOM, clamped between min-height-px/max-height-px) via pointer events."
+        },
+        {
+          "name": "min-width-px",
+          "description": "Smallest width in px the LEFT/RIGHT drag handles can resize the panel to (default 150). Read once at construction, not observed for changes."
+        },
+        {
+          "name": "max-width-px",
+          "description": "Largest width in px the LEFT/RIGHT drag handles can resize the panel to (default 800). Read once at construction, not observed for changes."
+        },
+        {
+          "name": "min-height-px",
+          "description": "Smallest height in px the TOP/BOTTOM drag handles can resize the panel to (default 150). Read once at construction, not observed for changes."
+        },
+        {
+          "name": "max-height-px",
+          "description": "Largest height in px the TOP/BOTTOM drag handles can resize the panel to (default 800). Read once at construction, not observed for changes."
         }
       ]
     }
