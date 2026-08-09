@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { buildSpritePixelGrid, hexToRgb } from "./generateSpritePng.js";
+import {
+  buildFramesPixelGrid,
+  buildSpritePixelGrid,
+  hexToRgb,
+} from "./generateSpritePng.js";
 
 const TILE_SIZE = 8;
 
@@ -57,6 +61,59 @@ describe("buildSpritePixelGrid", () => {
     expect(grid[2 * width + 3]).toBe(9);
     // everywhere else stays 0
     expect(grid.filter((value) => value === 9)).toHaveLength(1);
+  });
+});
+
+describe("buildFramesPixelGrid", () => {
+  it("returns one frame's own grid unchanged for a single frame", () => {
+    const framesTiles = [[solidTile(2)]];
+    const { width, height, pixels } = buildFramesPixelGrid(framesTiles, 1);
+
+    expect(width).toBe(TILE_SIZE);
+    expect(height).toBe(TILE_SIZE);
+    expect(Array.from(pixels)).toEqual(solidTile(2).pixels);
+  });
+
+  it("lays same-height frames out left-to-right, widths summed", () => {
+    const framesTiles = [[solidTile(1)], [solidTile(2)]];
+    const { width, height, pixels } = buildFramesPixelGrid(framesTiles, 1);
+
+    expect(width).toBe(TILE_SIZE * 2);
+    expect(height).toBe(TILE_SIZE);
+    for (let y = 0; y < TILE_SIZE; y++) {
+      for (let x = 0; x < TILE_SIZE; x++) {
+        expect(pixels[y * width + x]).toBe(1); // left frame
+        expect(pixels[y * width + TILE_SIZE + x]).toBe(2); // right frame
+      }
+    }
+  });
+
+  it("uses the tallest frame's height, padding shorter frames with 0", () => {
+    // 1 tile wide, 1 row (mapWidth 1) vs. 1 tile wide, 2 rows.
+    const shortFrame = [solidTile(1)];
+    const tallFrame = [solidTile(2), solidTile(3)];
+    const { width, height, pixels } = buildFramesPixelGrid(
+      [shortFrame, tallFrame],
+      1,
+    );
+
+    expect(width).toBe(TILE_SIZE * 2);
+    expect(height).toBe(TILE_SIZE * 2);
+    // Short frame's second row (past its own height) stays 0.
+    for (let x = 0; x < TILE_SIZE; x++) {
+      expect(pixels[TILE_SIZE * width + x]).toBe(0);
+    }
+    // Tall frame's second row is still tile color 3.
+    for (let x = 0; x < TILE_SIZE; x++) {
+      expect(pixels[TILE_SIZE * width + TILE_SIZE + x]).toBe(3);
+    }
+  });
+
+  it("returns a zero-size grid for no frames", () => {
+    const { width, height, pixels } = buildFramesPixelGrid([], 2);
+    expect(width).toBe(0);
+    expect(height).toBe(0);
+    expect(pixels).toHaveLength(0);
   });
 });
 

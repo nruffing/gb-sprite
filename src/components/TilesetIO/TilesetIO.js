@@ -1,5 +1,5 @@
 import styles from "./TilesetIO.css?inline";
-import { frameStore } from "../../state/frameStore.js";
+import { frameStore, MAP_WIDTH } from "../../state/frameStore.js";
 import { PALETTE_SIZE } from "../../state/paletteStore.js";
 import { generateSpritePng } from "./generateSpritePng.js";
 
@@ -68,8 +68,9 @@ class TilesetIO extends HTMLElement {
 
   #exportPng() {
     const payload = frameStore.toJSON();
-    const { tiles, mapWidth } = frameStore.selectedFrame;
-    const pngBytes = generateSpritePng(tiles, mapWidth, PALETTE_SIZE);
+    // One PNG for every frame, laid out side by side horizontally.
+    const framesTiles = frameStore.frames.map((frame) => frame.tiles);
+    const pngBytes = generateSpritePng(framesTiles, MAP_WIDTH, PALETTE_SIZE);
     const blob = new Blob([pngBytes], { type: "image/png" });
     downloadBlob(blob, buildExportFilename(payload.version, "png"));
   }
