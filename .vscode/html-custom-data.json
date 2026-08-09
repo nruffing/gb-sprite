@@ -42,7 +42,7 @@
       "attributes": [
         {
           "name": "name",
-          "description": "Key into the ICONS registry (src/components/SvgIcon/icons.js), e.g. \"copy\", \"code\", \"save\", or \"grid\"."
+          "description": "Key into the ICONS registry (src/components/SvgIcon/icons.js), e.g. \"copy\", \"code\", \"save\", \"grid\", or \"add\"."
         }
       ]
     },
@@ -77,7 +77,7 @@
     },
     {
       "name": "frame-gallery",
-      "description": "Renders a frame-preview per frame in frameStore.frames; clicking one selects it via frameStore.setSelectedFrameIndex, defined in src/components/FrameGallery/FrameGallery.js.",
+      "description": "Renders a frame-preview per frame in frameStore.frames; clicking one selects it via frameStore.setSelectedFrameIndex, plus an \"Add frame\" button that calls frameStore.addFrame(). Defined in src/components/FrameGallery/FrameGallery.js.",
       "attributes": []
     },
     {

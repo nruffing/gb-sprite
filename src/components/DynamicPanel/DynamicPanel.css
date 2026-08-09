@@ -5,6 +5,16 @@
   position: relative;
 }
 
+/* <slot> itself generates no box (UA default display: contents), so the
+   slotted element is the actual grid item here. Its default min-height is
+   auto, which would let its content grow the row (and this panel) instead
+   of letting the slotted content scroll internally — override it and give
+   it a definite height to work with. */
+.panel ::slotted(*) {
+  min-height: 0;
+  height: 100%;
+}
+
 .panel.resize-left {
   border-left: var(--divider-border);
 }
@@ -62,22 +72,7 @@
   bottom: calc(var(--resize-handle-width) / -2);
 }
 
-.panel.resize-left:has(.resize-handle-left:hover),
-.panel.resize-left:has(.resize-handle-left.dragging) {
-  border-left-color: var(--resize-handle-color-hover);
-}
-
-.panel.resize-top:has(.resize-handle-top:hover),
-.panel.resize-top:has(.resize-handle-top.dragging) {
-  border-top-color: var(--resize-handle-color-hover);
-}
-
-.panel.resize-right:has(.resize-handle-right:hover),
-.panel.resize-right:has(.resize-handle-right.dragging) {
-  border-right-color: var(--resize-handle-color-hover);
-}
-
-.panel.resize-bottom:has(.resize-handle-bottom:hover),
-.panel.resize-bottom:has(.resize-handle-bottom.dragging) {
-  border-bottom-color: var(--resize-handle-color-hover);
+.resize-handle:hover,
+.resize-handle.dragging {
+  background: var(--resize-handle-color-hover);
 }

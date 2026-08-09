@@ -63,6 +63,13 @@ class FrameStore extends EventTarget {
     return this.#selectedTileIndex;
   }
 
+  // Appends a new blank Frame (same tile count/mapWidth as the rest) and
+  // selects it.
+  addFrame() {
+    this.#frames.push(new Frame());
+    this.setSelectedFrameIndex(this.#frames.length - 1);
+  }
+
   isValidFrameIndex(index) {
     return Number.isInteger(index) && index >= 0 && index < this.#frames.length;
   }

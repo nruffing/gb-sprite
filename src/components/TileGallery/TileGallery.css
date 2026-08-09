@@ -5,7 +5,7 @@
 .gallery {
   display: flex;
   flex-direction: row;
-  gap: var(--gbs-spacer-200);
+  gap: var(--gallery-gap);
 }
 
 .tile {

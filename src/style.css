@@ -92,7 +92,7 @@
   --divider-padding: var(--gbs-spacer-300);
 
   --resize-handle-width: 4px;
-  --resize-handle-color-hover: var(--gbs-color-highlight-overlay);
+  --resize-handle-color-hover: var(--gbs-color-highlight);
 
   --toggle-width: 36px;
   --toggle-height: 20px;
@@ -105,10 +105,17 @@
   --toggle-focus-outline: 2px solid var(--gbs-color-highlight);
 
   --app-height: 100%;
+
   --container-padding: var(--gbs-spacer-500);
   --container-gap: var(--gbs-spacer-300);
 
+  --gallery-gap: var(--gbs-spacer-200);
+
   --panel-default-width: 300px;
+
+  --scrollbar-width: thin;
+  --scrollbar-thumb-color: var(--gbs-color-default-600);
+  --scrollbar-track-color: transparent;
 }
 
 html,
@@ -116,6 +123,11 @@ body {
   height: var(--app-height);
   margin: 0;
   padding: 0;
+  /* scrollbar-width/-color are inherited properties, so setting them once
+     here cascades into every component's shadow root too — no need to
+     repeat per scrollable element (e.g. FrameGallery's .gallery). */
+  scrollbar-width: var(--scrollbar-width);
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
 body {
@@ -125,7 +137,7 @@ body {
 #app {
   box-sizing: border-box;
   display: grid;
-  min-height: var(--app-height);
+  height: var(--app-height);
   grid-template-columns: max-content 1fr max-content;
   grid-template-rows: max-content 1fr;
   grid-template-areas:
@@ -161,6 +173,11 @@ body {
 #app > .right-panel {
   grid-area: right-panel;
   width: var(--panel-default-width);
+  /* A grid item's default min-height is auto, which lets its content push
+     the row (and #app) taller instead of scrolling — override it so long
+     frame galleries scroll internally instead of growing the whole page. */
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .divider-top {
