@@ -21,6 +21,9 @@ class FramePreview extends HTMLElement {
     super();
     const shadow = this.attachShadow({ mode: "open" });
     const { tiles, mapWidth } = this.#resolveFrame();
+    // Read once rather than observed — show-controls isn't expected to
+    // change after the element is created.
+    const showControls = this.hasAttribute("show-controls");
     shadow.innerHTML = /* html */ `
       <style>${styles}</style>
       <div class="container">
@@ -33,25 +36,33 @@ class FramePreview extends HTMLElement {
           )
           .join("")}
         </div>
+        ${
+          showControls
+            ? /* html */ `
         <div class="switches">
           <toggle-switch label="Flip-X" data-flip="x"></toggle-switch>
           <toggle-switch label="Flip-Y" data-flip="y"></toggle-switch>
         </div>
+        `
+            : ""
+        }
       </div>
       `;
 
     this.#tilePreviews = shadow.querySelectorAll("tile-preview");
-    shadow.querySelectorAll("toggle-switch").forEach((toggleSwitch) => {
-      const axis = toggleSwitch.dataset.flip;
-      toggleSwitch.addEventListener("change", (event) => {
-        if (axis === "x") {
-          this.#flipX = event.detail.checked;
-        } else {
-          this.#flipY = event.detail.checked;
-        }
-        this.#render();
+    if (showControls) {
+      shadow.querySelectorAll("toggle-switch").forEach((toggleSwitch) => {
+        const axis = toggleSwitch.dataset.flip;
+        toggleSwitch.addEventListener("change", (event) => {
+          if (axis === "x") {
+            this.#flipX = event.detail.checked;
+          } else {
+            this.#flipY = event.detail.checked;
+          }
+          this.#render();
+        });
       });
-    });
+    }
   }
 
   connectedCallback() {

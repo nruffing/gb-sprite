@@ -68,12 +68,16 @@
         {
           "name": "frame-index",
           "description": "Index into frameStore.frames to render. Falls back to frameStore.selectedFrameIndex if unset, so a bare <frame-preview> tracks whatever frame is currently being edited."
+        },
+        {
+          "name": "show-controls",
+          "description": "Present to render Flip-X/Flip-Y toggle-switches below the preview. Read once at construction, not observed — omit for compact/gallery-style instances that shouldn't show controls."
         }
       ]
     },
     {
       "name": "frame-gallery",
-      "description": "Gallery of frames from frameStore, defined in src/components/FrameGallery/FrameGallery.js. Currently a stub — not yet wired to frameStore's frame list.",
+      "description": "Renders a frame-preview per frame in frameStore.frames; clicking one selects it via frameStore.setSelectedFrameIndex, defined in src/components/FrameGallery/FrameGallery.js.",
       "attributes": []
     },
     {

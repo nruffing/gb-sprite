@@ -1,4 +1,40 @@
+:host {
+  display: block;
+}
+
+h2 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .gallery {
   display: flex;
   flex-direction: column;
+  gap: var(--gbs-container-gap);
+  padding: var(--container-padding);
+  align-items: center;
+}
+
+.frame {
+  position: relative;
+  display: flex;
+  border: transparent solid var(--grid-border-width);
+  cursor: pointer;
+}
+
+.frame.selected {
+  border-color: var(--gbs-color-highlight);
+  cursor: default;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.frame.selected .overlay {
+  opacity: 1;
+  background-color: var(--gbs-color-highlight-overlay);
 }
