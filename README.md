@@ -11,7 +11,7 @@ Inspired-by [Game Boy Tile Tool](https://nathanheffley.itch.io/game-boy-tile-too
 This is an attempt to provide some improved ergonomics and additional tooling to support a wholistic workflow.
 
 <p align="center">
-  <img src="screenshots/screenshot-20260808.png" alt="gb-sprite screenshot">
+  <img src="screenshots/screenshot-20260815.png" alt="gb-sprite screenshot">
 </p>
 
 ## Features
@@ -33,7 +33,7 @@ This is an attempt to provide some improved ergonomics and additional tooling to
 - **PNG export** — export the full tileset as a single indexed (8-bit colormap, 4-color/2bpp) PNG frame, sized to divide evenly into 8x8 tiles — ready for GBDK-2020 tooling like `png2asset`. This is a one-way export (unlike the JSON tileset save, it doesn't import back in).
 
   <p align="center">
-    <img src="screenshots/tileset-v1-2026-08-08T17-04-12Z.png" alt="Example exported PNG, a 16x16 indexed sprite frame" width="64" height="64">
+    <img src="screenshots/tileset-v2-2026-08-15T20-44-24Z.png" alt="Example exported PNG, a 16x16 indexed sprite frame" width="192" height="64">
   </p>
 
 ### Hotkeys
